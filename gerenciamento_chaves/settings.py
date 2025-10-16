@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    core,
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +121,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Apontar para o nosso modelo de usuário customizado
+AUTH_USER_MODEL = 'core.Usuario'
+
+# Definir a URL de login
+LOGIN_URL = 'login'
