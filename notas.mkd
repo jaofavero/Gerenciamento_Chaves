@@ -21,3 +21,4 @@ Acesse seu projeto, por padrão, em http://localhost:8000/ no seu navegador.
 
 - Digite no terminal:
     >``python manage.py migrate``
+
