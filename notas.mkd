@@ -1,0 +1,23 @@
+Python_version = "3.13"
+Django "5.5.7"
+
+Ativação do ambiente virtual 
+    >``venv\Scripts\activate``
+ 
+Desativação do ambiente virtual (opcional)
+    >``deactivate``
+
+Para testar seu projeto localmente, execute o seguinte comando para iniciar o servidor de desenvolvimento do Django:
+
+   >``python manage.py runserver``
+
+Acesse seu projeto, por padrão, em http://localhost:8000/ no seu navegador.
+
+# MIGRATION
+1. No terminal, estando no diretório do projeto  
+- Digite  no terminal:
+    > ``python manage.py makemigrations``
+    - Obs: se a classe não tiver o atributo id, será criado um automaticamente
+
+- Digite no terminal:
+    >``python manage.py migrate``

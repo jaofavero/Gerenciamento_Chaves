@@ -45,10 +45,15 @@ class Chave(models.Model):
         verbose_name='Grupo com Permissão',
         help_text='Se definido, apenas usuários deste grupo podem retirar esta chave.'
     )
-
+    excluido = models.BooleanField(
+        'Excluído (Logicamente)',
+        default=False,
+        help_text='Se marcado, a chave não aparecerá para novos empréstimos, mas será mantida no histórico.'
+    )
     class Meta:
         verbose_name = 'Chave'
         verbose_name_plural = 'Chaves'
 
     def __str__(self):
         return self.nome
+    

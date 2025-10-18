@@ -19,7 +19,8 @@ class HistoricoEmprestimo(models.Model):
     # CASCADE: se a chave for deletada, deleta também os registros históricos
     chave = models.ForeignKey(
         Chave,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL, # Preserva o histórico se a chave for deletada
+        null=True, # Permite que o campo 'chave' fique nulo
         related_name='historico',
         verbose_name='Chave Transacionada'
     )
@@ -45,7 +46,10 @@ class HistoricoEmprestimo(models.Model):
         verbose_name_plural = 'Históricos de Empréstimos'
         ordering = ['-data_hora']  # Ordena do mais recente para o mais antigo
 
-    def __str__(self):
-        # Método que define como o objeto será representado como string
-        # Exemplo: "Chave A - Retirada por joao em 01/01/2023 14:30"
-        return f'{self.chave.nome} - {self.get_acao_display()} por {self.usuario.username} em {self.data_hora.strftime("%d/%m/%Y %H:%M")}'
+def __str__(self):
+        # Método __str__ robusto que funciona mesmo se a chave ou usuário forem nulos
+        nome_chave = self.chave.nome if self.chave else "[Chave Excluída]"
+        nome_usuario = self.usuario.username if self.usuario else "[Usuário Excluído]"
+        data_formatada = self.data_hora.strftime("%d/%m/%Y às %H:%M")
+        
+        return f'{nome_chave} - {self.get_acao_display()} por {nome_usuario} em {data_formatada}'
