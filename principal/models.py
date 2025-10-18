@@ -4,5 +4,5 @@ from django.db import models
 
 #import submodels
 from .submodels.usuarioModels import Usuario
-from .submodels.ativoModels import Chave
+from .submodels.chaveModels import Chave
 from .submodels.emprestimoModels import HistoricoEmprestimo

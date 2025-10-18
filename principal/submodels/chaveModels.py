@@ -1,19 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
-from ..submodels.usuarioModels import Usuario
+from .usuarioModels import Usuario
 
 class Chave(models.Model):
     """
     Representa um ativo físico (uma chave) a ser gerenciado pelo sistema.
     """
+    # Define as opções de status possíveis para uma chave
     STATUS_CHOICES = [
         ('disponivel', 'Disponível'),
         ('em_uso', 'Em Uso'),
     ]
 
+    # Campo para o nome da chave, deve ser único
     nome = models.CharField('Nome da Chave', max_length=100, unique=True, help_text='Ex: Laboratório de Redes, Sala 203.')
+    
+    # Campo opcional para descrição detalhada da chave
     descricao = models.TextField('Descrição', blank=True, help_text='Informações adicionais sobre a chave ou o local.')
     
+    # Campo para controle do status atual da chave
     status = models.CharField(
         'Status Atual',
         max_length=20,
@@ -21,6 +26,7 @@ class Chave(models.Model):
         default='disponivel'
     )
     
+    # Relacionamento com o usuário que está atualmente com a chave
     portador_atual = models.ForeignKey(
         Usuario,
         on_delete=models.SET_NULL,
@@ -30,6 +36,7 @@ class Chave(models.Model):
         verbose_name='Portador Atual'
     )
     
+    # Grupo de usuários que tem permissão para retirar a chave
     grupo_permissao = models.ForeignKey(
         Group,
         on_delete=models.SET_NULL,
