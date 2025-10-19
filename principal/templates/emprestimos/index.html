@@ -28,9 +28,8 @@
                     <th>ID</th>
                     <th>Item</th>
                     <th>Usuário</th>
-                    <th>Data início</th>
-                    <th>Data devolução</th>
-                    <th>Status</th>
+                    <th>Data</th>
+                    <th>Ação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -40,9 +39,8 @@
                         <td>{{ emprestimo.id }}</td>
                         <td>{{ emprestimo.item }}</td>
                         <td>{{ emprestimo.usuario }}</td>
-                        <td>{{ emprestimo.data_inicio }}</td>
-                        <td>{{ emprestimo.data_devolucao }}</td>
-                        <td>{{ emprestimo.status }}</td>
+                        <td>{{ emprestimo.data_hora }}</td>
+                        <td>{{ emprestimo.acao }}</td>
                         <td>
                             <a href="{{ emprestimo.id }}/">Ver</a> |
                             <a href="{{ emprestimo.id }}/editar/">Editar</a> |
