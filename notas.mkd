@@ -1,3 +1,4 @@
+# REQUISITOS
 Python_version = "3.13"
 Django "5.5.7"
 
@@ -22,3 +23,12 @@ Acesse seu projeto, por padrão, em http://localhost:8000/ no seu navegador.
 - Digite no terminal:
     >``python manage.py migrate``
 
+# SUPERUSER
+Criar super usuario
+    >`python manage.py createsuperuser`
+
+Usuário: IFTM
+Endereço de email: iftm@iftm.edu.br
+Password: EngComp
+
+Esse é um para teste, faça um com uma senha dificil e que não fique amostra quando o sistema estiver publico
