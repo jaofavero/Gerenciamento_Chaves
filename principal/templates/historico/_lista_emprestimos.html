@@ -1,0 +1,31 @@
+{% with lista=page_obj.object_list|default:emprestimos %}
+<table class="tabela-emprestimos">
+    <thead>
+        <tr>
+            <th>Chave</th>
+            <th>Usuário</th>
+            <th>Data e Hora</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in lista %}
+            <tr>
+                <td>{{ emprestimo.chave.nome|default:"[Chave Excluída]" }}</td>
+                <td>{{ emprestimo.usuario.username|default:"[Usuário Excluído]" }}</td>
+                <td>{{ emprestimo.data_hora|date:"d/m/Y H:i" }}</td>
+                <td>{{ emprestimo.get_acao_display }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">Nenhum registro encontrado.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if lista.count > 0 %}
+<p>Mostrando {{ lista.count }} registro(s).</p>
+{% endif %}
+
+{% endwith %}
