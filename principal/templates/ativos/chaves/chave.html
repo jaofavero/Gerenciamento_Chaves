@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Identificação: {{ chave.nome }}{% endblock %}
+
+{% block content %}
+    <div class="chave-action-container">
+        <h2>Chave: {{ chave.nome }}</h2>
+
+        <p class="chave-status {% if chave.status == 'disponivel' %}status-disponivel{% else %}status-em-uso{% endif %}">
+            Status Atual: {{ chave.get_status_display }}
+            {% if chave.portador_atual %}
+                (com {{ chave.portador_atual.username }})
+            {% endif %}
+        </p>
+
+        <div class="chave-actions">
+            {% if chave.status == 'disponivel' or chave.portador_atual != user %}
+                <form method="post" action="{% url 'pegar_chave' pk=chave.pk %}" style="margin-bottom: 15px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-pegar-chave">Estou com a posse da chave</button>
+                </form>
+            {% elif chave.portador_atual == user %}
+                 <p class="info-message">Você já está com esta chave.</p>
+             {% endif %}
+
+
+            <a href="{% url 'index' %}" class="btn-voltar-index">Não estou com a chave</a>
+        </div>
+
+    </div>
+{% endblock %}
