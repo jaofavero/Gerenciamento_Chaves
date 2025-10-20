@@ -11,7 +11,7 @@
         {% for emprestimo in emprestimos_list %} 
             <tr>
                 <td>{{ emprestimo.chave.nome|default:"[Chave Excluída]" }}</td>
-                <td>{{ emprestimo.usuario.username|default:"[Usuário Excluído]" }}</td>
+                <td>{{ emprestimo.usuario.first_name|default:"[Usuário Excluído]" }} {{ emprestimo.usuario.last_name|default:"[Usuário Excluído]" }}</td>
                 <td>{{ emprestimo.data_hora|date:"d/m/Y H:i" }}</td>
                 <td>{{ emprestimo.get_acao_display }}</td>
             </tr>

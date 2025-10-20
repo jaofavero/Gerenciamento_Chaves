@@ -1,56 +1,101 @@
+/* Atualizado: static/css/style.css */
+
 body {
-    font-family: Arial, sans-serif;
+    /* Fonte padrão do exemplo aplicado ao corpo */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Mantendo um fundo claro para o corpo */
     color: #333;
     line-height: 1.6;
+    overflow-y: scroll; /* Adicionado do exemplo */
 }
+
 header {
-    background: #333;
-    color: #fff;
+    /* Cor de fundo do exemplo */
+    background-color: #2f9e41; 
+    color: #fff; /* Cor do texto do exemplo */
     padding: 1rem;
     text-align: center;
+    /* Ajustes para centralizar verticalmente e dar altura fixa (opcional) */
+    height: 80px; /* Altura do exemplo */
+    display: flex;
+    flex-direction: column; /* Empilha título e navegação */
+    align-items: center;
+    justify-content: center;
 }
-header nav { margin-top: 10px; }
+
+header h1 {
+    margin-bottom: 5px; /* Reduz espaço entre título e nav */
+}
+
+header nav {
+    margin-top: 5px;
+}
+
 header nav a {
-    color: #fff;
+    color: #fff; /* Cor do link no header do exemplo */
     text-decoration: none;
     margin: 0 10px;
-    font-weight: bold;
+    font-weight: bold; /* Mantendo negrito para destaque */
 }
-header nav a:hover { text-decoration: underline; }
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
 main {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff;
+    background: #fff; /* Fundo branco para área principal */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* Adiciona espaço no topo para compensar header fixo (se fosse fixo) */
+    /* Se o header fosse 'position: fixed', precisaríamos de: margin-top: 100px; */
 }
+
 footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px;
-    color: #777;
+    color: #777; /* Mantendo cinza para o rodapé */
+     /* Fonte padrão do exemplo */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
+/* Estilos da Tabela */
 .tabela-emprestimos {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
+
 .tabela-emprestimos th,
 .tabela-emprestimos td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
+    /* Fonte padrão do exemplo aplicada à tabela */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
+
 .tabela-emprestimos th {
-    background-color: #333;
-    color: white;
+    /* Usando um verde um pouco mais escuro para o cabeçalho da tabela */
+    background-color: #008042; 
+    color: white; /* Texto branco como no header */
+    font-weight: bold; /* Adicionando negrito */
 }
-.tabela-emprestimos tr:nth-child(even) { background-color: #f9f9f9; }
-.tabela-emprestimos tr:hover { background-color: #f1f1f1; }
+
+.tabela-emprestimos tr:nth-child(even) {
+    background-color: #f9f9f9; /* Mantendo destaque leve para linhas pares */
+}
+
+.tabela-emprestimos tr:hover {
+    background-color: #e9f5e9; /* Verde bem claro no hover */
+}
+
+/* Formulário de Filtro */
 .form-filtro {
     margin-bottom: 20px;
     padding: 15px;
@@ -60,7 +105,10 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+     /* Fonte padrão do exemplo */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
 .form-filtro input,
 .form-filtro select,
 .form-filtro button,
@@ -68,28 +116,60 @@ footer {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+     /* Fonte padrão do exemplo */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+
 .form-filtro button {
-    background-color: #337ab7;
+    /* Cor primária do exemplo para o botão de pesquisa */
+    background-color: #2f9e41; 
     color: white;
     cursor: pointer;
-    border-color: #2e6da4;
+    border: none; /* Removendo borda padrão */
 }
+.form-filtro button:hover {
+     /* Cor secundária do exemplo no hover */
+    background-color: #008042;
+}
+
+
 .form-filtro .btn-limpar {
-    background-color: #f0ad4e;
+    /* Cor de aviso do exemplo para o botão limpar */
+    background-color: #fc9300; 
     color: white;
     cursor: pointer;
     text-decoration: none;
-    border-color: #eea236;
+    border: none; /* Removendo borda padrão */
 }
-.pagination { margin-top: 20px; }
+.form-filtro .btn-limpar:hover {
+     /* Cor secundária de aviso do exemplo no hover */
+    background-color: #e28400; 
+}
+
+/* Paginação */
+.pagination {
+    margin-top: 20px;
+    /* Fonte padrão do exemplo */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+}
+
 .pagination .step-links a {
     text-decoration: none;
     padding: 5px 10px;
     border: 1px solid #ddd;
     margin: 0 2px;
+    color: #2f9e41; /* Cor primária nos links */
+    background-color: #fff;
+    border-radius: 4px;
 }
+.pagination .step-links a:hover {
+    background-color: #e9f5e9; /* Fundo verde claro no hover */
+    border-color: #c8e6c9;
+}
+
+
 .pagination .current {
     font-weight: bold;
     margin: 0 5px;
+    color: #333; /* Cor escura para página atual */
 }
