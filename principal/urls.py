@@ -16,5 +16,6 @@ urlpatterns = [
     # URL: /api/ultimos-emprestimos/
     # View: views.api_ultimos_emprestimos
     # Nome: 'api_ultimos_emprestimos'
+    # Esta é a URL que o nosso JavaScript vai chamar
     path('api/ultimos-emprestimos/', views.api_ultimos_emprestimos, name='api_ultimos_emprestimos'),
 ]

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Histórico Completo - Gerenciamento de Chaves{% endblock %}
+
+{% block content %}
+    <h2>Histórico Completo de Empréstimos</h2>
+
+    <form method="GET" action="{% url 'historico_list' %}" class="form-filtro">
+        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}">
+        <input type="text" name="usuario_nome" placeholder="Nome do Usuário" value="{{ request.GET.usuario_nome }}">
+        
+        <select name="acao">
+            <option value="">Qualquer Ação</option>
+            <option value="adquirida" {% if request.GET.acao == 'adquirida' %}selected{% endif %}>Adquirida</option>
+            <option value="devolucao" {% if request.GET.acao == 'devolucao' %}selected{% endif %}>Devolução</option>
+            <option value="transferida" {% if request.GET.acao == 'transferida' %}selected{% endif %}>Transferida</option>
+        </select>
+        
+        <input type="date" name="data" value="{{ request.GET.data }}">
+        
+        <button type="submit">Pesquisar</button>
+        <a href="{% url 'historico_list' %}" class="btn-limpar">Limpar</a>
+    </form>
+
+    <div id="lista-emprestimos-container">
+        {% include 'historico/_lista_emprestimos.html' %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

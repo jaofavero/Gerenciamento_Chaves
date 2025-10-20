@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tela Inicial - Gerenciamento de Chaves{% endblock %}
+{% block content %}
+    <h2>Últimas 20 atulizações</h2>
+    <p>Esta lista atualiza automaticamente a cada 60 segundos.</p>
+    <div id="lista-emprestimos-container">
+        {% include 'historico/_lista_emprestimos.html' %} 
+    </div>
+{% endblock %}

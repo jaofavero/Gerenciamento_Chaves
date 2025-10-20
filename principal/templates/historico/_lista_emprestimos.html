@@ -1,4 +1,3 @@
-{% with lista=page_obj.object_list|default:emprestimos %}
 <table class="tabela-emprestimos">
     <thead>
         <tr>
@@ -9,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for emprestimo in lista %}
+        {% for emprestimo in emprestimos_list %} 
             <tr>
                 <td>{{ emprestimo.chave.nome|default:"[Chave Excluída]" }}</td>
                 <td>{{ emprestimo.usuario.username|default:"[Usuário Excluído]" }}</td>
@@ -24,8 +23,6 @@
     </tbody>
 </table>
 
-{% if lista.count > 0 %}
-<p>Mostrando {{ lista.count }} registro(s).</p>
+{% if emprestimos_list.count > 0 %} 
+<p>Mostrando {{ emprestimos_list.count }} registro(s).</p>
 {% endif %}
-
-{% endwith %}
