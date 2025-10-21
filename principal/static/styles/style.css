@@ -173,3 +173,80 @@ footer {
     margin: 0 5px;
     color: #333; /* Cor escura para página atual */
 }
+
+.chave-action-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.chave-action-container h2 {
+    margin-top: 0;
+    font-size: 2.2rem; /* Fonte maior para o nome da chave */
+    color: #333;
+}
+
+.chave-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.status-disponivel {
+    color: #2f9e41; /* Verde do seu header */
+    background-color: #e9f5e9;
+}
+
+.status-em-uso {
+    color: #d9534f; /* Um tom de vermelho/laranja */
+    background-color: #fdf2f2;
+}
+
+.chave-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-pegar-chave {
+    /* Botão principal, maior e central (pela largura) */
+    padding: 18px 30px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    background-color: #2f9e41; /* Cor primária */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    width: 100%; /* Ocupa a largura do container */
+}
+
+.btn-pegar-chave:hover {
+    background-color: #008042; /* Cor secundária no hover */
+}
+
+.btn-voltar-index {
+    /* Botão/link menor */
+    font-size: 1rem;
+    color: #555;
+    text-decoration: none;
+}
+
+.btn-voltar-index:hover {
+    text-decoration: underline;
+}
+
+.info-message {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 20px 0;
+}

@@ -1,11 +1,22 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from principal.models import Usuario, Chave, HistoricoEmprestimo
 
 # Register your models here.
-class UsuarioAdmin(admin.ModelAdmin):
-    #Estamon aproveitando de uma funcionalidade do Django para o usuario, por esse motivo usamos "username" e "email"
-    list_display = ('username', 'email', 'contato', 'cpf')
-    '''user_permissions', 'groups'''
+class UsuarioAdmin(UserAdmin):
+    
+    # Adiciona os campos 'cpf' e 'contato' aos 'fieldsets' 
+    fieldsets = UserAdmin.fieldsets + (
+        ('Informações Customizadas', {'fields': ('cpf', 'contato')}),
+    )
+
+    # Adiciona os campos 'cpf' e 'contato' ao 'add_fieldsets'
+    # (os campos exibidos ao CRIAR um novo usuário).
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        ('Informações Customizadas', {'fields': ('cpf', 'contato')}),
+    )
+
+    list_display = UserAdmin.list_display + ('contato', 'cpf')
 
 class ChaveAdmin(admin.ModelAdmin):
     list_display = ('nome', 'status', 'portador_atual', 'grupo_permissao', 'excluido')

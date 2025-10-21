@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
 from principal.models import HistoricoEmprestimo, Chave, Usuario
@@ -52,3 +53,42 @@ def api_ultimos_emprestimos(request):
         'emprestimos_list': emprestimos
     }
     return render(request, 'historico/_lista_emprestimos.html', contexto) # Caminho já corrigido
+
+''''@login_required'''
+def pegar_chave(request, pk):
+    """
+    View para a página individual da Chave.
+    GET: Exibe a página de confirmação.
+    POST: Registra a posse da chave para o usuário logado.
+    """
+    # Busca a chave específica pelo ID (pk) ou retorna um erro 404 se não existir
+    chave = get_object_or_404(Chave, pk=pk)
+    usuario_logado = request.user
+
+    if request.method == 'POST':
+        # --- Lógica do Botão "Estou com a posse da chave" ---
+        
+        # Apenas cria o registro se o usuário logado não for o portador atual
+        if chave.portador_atual != usuario_logado:
+            
+            # Cria o novo registro de histórico.
+            # A ação 'adquirida' acionará o método .save() 
+            # do modelo HistoricoEmprestimo, que atualizará
+            # o status e o portador da chave automaticamente.
+            HistoricoEmprestimo.objects.create(
+                chave=chave,
+                usuario=usuario_logado,
+                acao='adquirida' 
+            )
+        
+        # Redireciona o usuário de volta para a tela inicial
+        return redirect('index')
+    
+    else: # request.method == 'GET'
+        # --- Lógica para exibir a página ---
+        # Apenas exibe a página de confirmação
+        contexto = {
+            'chave': chave
+        }
+        # Renderiza o template que criamos no Passo 1
+        return render(request, 'ativos/chaves/chave.html', contexto)
