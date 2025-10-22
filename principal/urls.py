@@ -25,7 +25,18 @@ urlpatterns = [
     # Nome: 'pegar_chave' (usado em {% url 'pegar_chave' pk=chave.pk %})
     path('chave/<int:pk>/', views.pegar_chave, name='pegar_chave'),
 
-path('login/', auth_views.LoginView.as_view(template_name='usuario/login.html'), name='login'),
+    # URL: /chaves/
+    # View: views.lista_chaves
+    # Nome: 'lista_chaves' (usado em {% url 'lista_chaves' %})
+    path('chaves/', views.lista_chaves, name='lista_chaves'),
+
+    # URL: /login/
+    # View: auth_views.LoginView (com template 'usuario/login.html')
+    # Nome: 'login' (usado em {% url 'login' %})
+    path('login/', auth_views.LoginView.as_view(template_name='usuario/login.html'), name='login'),
     
+    # URL: /logout/
+    # View: auth_views.LogoutView
+    # Nome: 'logout' (usado em {% url 'logout' %})
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
