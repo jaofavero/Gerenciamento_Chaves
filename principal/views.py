@@ -66,6 +66,46 @@ def historico_list(request):
     return render(request, 'historico/historico.html', contexto) # Caminho já correto
 
 @login_required
+def lista_chaves(request):
+    """
+    View para a Tela de Gerenciamento de Chaves.
+    Lista todas as chaves com filtros.
+    *** RESTRITA APENAS PARA STAFF ***
+    """
+    # 1. Verificação de staff
+    if not request.user.is_staff:
+        return redirect('index')
+
+    # 2. Busca base (mostra todas as chaves, ordenadas por nome)
+    queryset = Chave.objects.select_related('portador_atual').order_by('nome')
+
+    # 3. Lógica de Filtro/Pesquisa
+    chave_nome = request.GET.get('chave_nome')
+    status = request.GET.get('status')
+    excluido = request.GET.get('excluido')
+
+    if chave_nome: 
+        queryset = queryset.filter(nome__icontains=chave_nome)
+    if status: 
+        queryset = queryset.filter(status=status)
+    if excluido == 'sim':
+        queryset = queryset.filter(excluido=True)
+    elif excluido == 'nao':
+        queryset = queryset.filter(excluido=False)
+    # Se 'excluido' for "" (Qualquer), não aplica filtro.
+
+    # 4. Lógica de Paginação
+    paginador = Paginator(queryset, 20) 
+    pagina_num = request.GET.get('page')
+    page_obj = paginador.get_page(pagina_num)
+
+    contexto = {
+        'page_obj': page_obj,
+        'chaves_list': page_obj.object_list 
+    }
+    return render(request, 'ativos/chaves/lista_chaves.html', contexto)
+
+@login_required
 def api_ultimos_emprestimos(request):
     """
     View 'API' especial.

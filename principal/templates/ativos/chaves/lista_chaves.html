@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gerenciamento de Chaves - Gerenciamento de Chaves{% endblock %}
+
+{% block content %}
+    <h2>Gerenciamento de Chaves</h2>
+
+    <form method="GET" action="{% url 'lista_chaves' %}" class="form-filtro">
+        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}">
+        
+        <select name="status">
+            <option value="">Qualquer Status</option>
+            <option value="disponivel" {% if request.GET.status == 'disponivel' %}selected{% endif %}>Disponível</option>
+            <option value="em_uso" {% if request.GET.status == 'em_uso' %}selected{% endif %}>Em Uso</option>
+        </select>
+        
+        <select name="excluido">
+            <option value="">Qualquer</option>
+            <option value="nao" {% if request.GET.excluido == 'nao' %}selected{% endif %}>Não Excluídas</option>
+            <option value="sim" {% if request.GET.excluido == 'sim' %}selected{% endif %}>Apenas Excluídas</option>
+        </select>
+        
+        <button type="submit">Pesquisar</button>
+        <a href="{% url 'lista_chaves' %}" class="btn-limpar">Limpar</a>
+    </form>
+
+    <table class="tabela-emprestimos">
+        <thead>
+            <tr>
+                <th>Nome da Chave</th>
+                <th>Status / Portador Atual</th>
+                <th>Excluído</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for chave in page_obj.object_list %} 
+                <tr {% if chave.excluido %}style="opacity: 0.5; background-color: #f2f2f2;"{% endif %}>
+                    
+                    <td>{{ chave.nome }}</td>
+                    
+                    <td>
+                        {% if chave.status == 'disponivel' %}
+                            <span style="color: #2f9e41; font-weight: bold;">Disponível</span>
+                        {% else %}
+                            {{ chave.portador_atual|default:"Em uso (Indefinido)" }}
+                        {% endif %}
+                    </td>
+                    
+                    <td>{{ chave.excluido|yesno:"Sim,Sim,Não" }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Nenhuma chave encontrada com os critérios de pesquisa.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}

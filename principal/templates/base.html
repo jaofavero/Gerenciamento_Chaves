@@ -16,6 +16,7 @@
             <a href="{% url 'index' %}">Tela Inicial</a>
             
             {% if user.is_staff %}
+                | <a href="{% url 'lista_chaves' %}">Gerenciar Chaves</a>
                 | <a href="{% url 'historico_list' %}">Histórico Completo</a>
             {% endif %}
         </nav>
