@@ -6,21 +6,41 @@ from principal.models import HistoricoEmprestimo, Chave, Usuario
 
 @login_required
 def index(request):
-    """
-    View para a Tela Inicial.
-    """
-    emprestimos = HistoricoEmprestimo.objects.select_related('chave', 'usuario').order_by('-data_hora')[:20]
+    # 1. Lógica da Tabela de Chaves
+    queryset = Chave.objects.select_related('portador_atual').filter(excluido=False).order_by('nome')
+    chave_nome = request.GET.get('chave_nome')
+    if chave_nome:
+        queryset = queryset.filter(nome__icontains=chave_nome)
+    
+    paginador = Paginator(queryset, 20) 
+    pagina_num = request.GET.get('page')
+    page_obj = paginador.get_page(pagina_num)
+
+    # 2. Contexto inicial
     contexto = {
-        # MUDANÇA: Usar 'emprestimos_list' como chave
-        'emprestimos_list': emprestimos 
+        'page_obj': page_obj,
+        'chaves_list': page_obj.object_list 
     }
-    return render(request, 'index.html', contexto) # Caminho já corrigido
+
+    #    Busca os últimos 10 empréstimos SE o usuário for staff
+    if request.user.is_staff:
+        ultimos_emprestimos = HistoricoEmprestimo.objects.select_related(
+            'chave', 'usuario'
+        ).order_by('-data_hora')[:10]
+        
+        # Adiciona a lista ao contexto
+        contexto['ultimos_10_emprestimos'] = ultimos_emprestimos
+
+    return render(request, 'index.html', contexto)
 
 @login_required
 def historico_list(request):
     """
     View para a Tela de Histórico.
     """
+    if not request.user.is_staff:
+        return redirect('index')
+    
     queryset = HistoricoEmprestimo.objects.select_related('chave', 'usuario').order_by('-data_hora')
 
     # --- Lógica de Filtro/Pesquisa  ---
