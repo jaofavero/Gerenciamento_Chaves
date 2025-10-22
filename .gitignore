@@ -6,8 +6,8 @@ __pycache__/
 *$py.class
 
 # Arquivos de Banco de Dados de Desenvolvimento
-#db.sqlite3
-#*.sqlite3
+db.sqlite3
+*.sqlite3
 
 # Ambiente Virtual Python
 # (O seu está em venv/ segundo notas.mkd)
