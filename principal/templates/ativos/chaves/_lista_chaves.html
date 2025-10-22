@@ -25,12 +25,13 @@
         <a href="{% url 'lista_chaves' %}" class="btn-limpar">Limpar</a>
     </form>
 
-    <table class="tabela-emprestimos">
+<table class="tabela-emprestimos">
         <thead>
             <tr>
                 <th>Nome da Chave</th>
                 <th>Status / Portador Atual</th>
-                <th>Excluído</th>
+                
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -47,7 +48,18 @@
                         {% endif %}
                     </td>
                     
-                    <td>{{ chave.excluido|yesno:"Sim,Sim,Não" }}</td>
+                    <td>
+                        {% if chave.status == 'disponivel' %}
+                            <a href="{% url 'entregar_chave' pk=chave.pk %}?next=lista_chaves" class="btn-acao-entregar">
+                                Entregar
+                            </a>
+                        {% elif chave.status == 'em_uso' %}
+                            <form method="POST" action="{% url 'receber_chave' pk=chave.pk %}?next=lista_chaves" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-acao-receber">Receber</button>
+                            </form>
+                        {% endif %}
+                    </td>
                 </tr>
             {% empty %}
                 <tr>
@@ -56,7 +68,6 @@
             {% endfor %}
         </tbody>
     </table>
-
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}

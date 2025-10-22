@@ -30,6 +30,11 @@ urlpatterns = [
     # Nome: 'lista_chaves' (usado em {% url 'lista_chaves' %})
     path('chaves/', views.lista_chaves, name='lista_chaves'),
 
+    path('chave/<int:pk>/receber/', views.receber_chave, name='receber_chave'),
+    
+    # URL para a página de "Entregar" uma chave para um usuário
+    path('chave/<int:pk>/entregar/', views.entregar_chave, name='entregar_chave'),
+
     # URL: /login/
     # View: auth_views.LoginView (com template 'usuario/login.html')
     # Nome: 'login' (usado em {% url 'login' %})

@@ -414,3 +414,29 @@ body.login-page {
     border-radius: 4px;
     text-align: center;
 }
+
+/* ... (todo o seu CSS existente) ... */
+
+/* --- Estilos para Botões de Ação de Staff --- */
+.btn-acao-entregar,
+.btn-acao-receber {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.btn-acao-entregar,
+.btn-acao-receber {
+    background-color: #2f9e41; /* Cor primária */
+}
+.btn-acao-entregar:hover,
+.btn-acao-receber:hover {
+    background-color: #008042; /* Cor secundária (hover) */
+}

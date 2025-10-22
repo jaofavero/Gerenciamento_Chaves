@@ -22,11 +22,15 @@
         <a href="{% url 'index' %}" class="btn-limpar">Limpar</a>
     </form>
 
-    <table class="tabela-emprestimos">
+<table class="tabela-emprestimos">
         <thead>
             <tr>
                 <th>Nome da Chave</th>
                 <th>Status / Portador Atual</th>
+                
+                {% if user.is_staff %}
+                    <th>Ações</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -40,10 +44,27 @@
                             {{ chave.portador_atual|default:"Em uso (Indefinido)" }}
                         {% endif %}
                     </td>
+
+                    {% if user.is_staff %}
+                        <td>
+                            {% if chave.status == 'disponivel' %}
+                                <a href="{% url 'entregar_chave' pk=chave.pk %}?next=index" class="btn-acao-entregar">
+                                    Entregar
+                                </a>
+                            {% elif chave.status == 'em_uso' %}
+                                <form method="POST" action="{% url 'receber_chave' pk=chave.pk %}?next=index" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-acao-receber">Receber</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    {% endif %}
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="2">Nenhuma chave encontrada com os critérios de pesquisa.</td>
+                    <td colspan="{% if user.is_staff %}3{% else %}2{% endif %}">
+                        Nenhuma chave encontrada com os critérios de pesquisa.
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
