@@ -129,5 +129,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Apontar para o nosso modelo de usuário customizado
 AUTH_USER_MODEL = 'principal.Usuario'
 
-# Definir a URL de login
+# Definir a URL de login (Esta linha você já tem)
 LOGIN_URL = 'login'
+
+# --- ADICIONE ESTAS DUAS LINHAS ---
+
+# Para onde redirecionar após o LOGIN bem-sucedido
+LOGIN_REDIRECT_URL = 'index'
+
+# Para onde redirecionar após o LOGOUT
+LOGOUT_REDIRECT_URL = 'login'

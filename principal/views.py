@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from principal.models import HistoricoEmprestimo, Chave, Usuario
 
+@login_required
 def index(request):
     """
     View para a Tela Inicial.
@@ -15,13 +16,14 @@ def index(request):
     }
     return render(request, 'index.html', contexto) # Caminho já corrigido
 
+@login_required
 def historico_list(request):
     """
     View para a Tela de Histórico.
     """
     queryset = HistoricoEmprestimo.objects.select_related('chave', 'usuario').order_by('-data_hora')
 
-    # --- Lógica de Filtro/Pesquisa (sem alterações) ---
+    # --- Lógica de Filtro/Pesquisa  ---
     chave_nome = request.GET.get('chave_nome')
     usuario_nome = request.GET.get('usuario_nome')
     acao = request.GET.get('acao')
@@ -31,7 +33,7 @@ def historico_list(request):
     if acao: queryset = queryset.filter(acao=acao)
     if data: queryset = queryset.filter(data_hora__date=data)
 
-    # --- Lógica de Paginação (sem alterações) ---
+    # --- Lógica de Paginação  ---
     paginador = Paginator(queryset, 20) 
     pagina_num = request.GET.get('page')
     page_obj = paginador.get_page(pagina_num)
@@ -43,6 +45,7 @@ def historico_list(request):
     }
     return render(request, 'historico/historico.html', contexto) # Caminho já correto
 
+@login_required
 def api_ultimos_emprestimos(request):
     """
     View 'API' especial.
@@ -54,7 +57,7 @@ def api_ultimos_emprestimos(request):
     }
     return render(request, 'historico/_lista_emprestimos.html', contexto) # Caminho já corrigido
 
-''''@login_required'''
+@login_required
 def pegar_chave(request, pk):
     """
     View para a página individual da Chave.

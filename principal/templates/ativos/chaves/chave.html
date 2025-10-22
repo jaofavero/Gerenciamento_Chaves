@@ -20,12 +20,12 @@
                     {% csrf_token %}
                     <button type="submit" class="btn-pegar-chave">Estou com a posse da chave</button>
                 </form>
+                <a href="{% url 'index' %}" class="btn-voltar-index">Não estou com a chave</a>
             {% elif chave.portador_atual == user %}
                  <p class="info-message">Você já está com esta chave.</p>
+                 <a href="{% url 'index' %}" class="btn-voltar-index">Voltar a tela Inicial</a>
              {% endif %}
 
-
-            <a href="{% url 'index' %}" class="btn-voltar-index">Não estou com a chave</a>
         </div>
 
     </div>

@@ -15,6 +15,17 @@
             <a href="{% url 'index' %}">Tela Inicial</a> |
             <a href="{% url 'historico_list' %}">Histórico Completo</a>
         </nav>
+        
+    {% if user.is_authenticated %}
+        <div class="user-info">
+            <span>Olá, {{ user|default:"Usuário" }}</span> | 
+            
+            <form method="post" action="{% url 'logout' %}" class="form-logout">
+                {% csrf_token %}
+                <button type="submit" class="btn-logout">Sair</button>
+            </form>
+        </div>
+    {% endif %}
     </header>
     <main>
         {% block content %}

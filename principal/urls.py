@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 # Lista de URLs do aplicativo principal
 urlpatterns = [
@@ -23,4 +24,8 @@ urlpatterns = [
     # View: views.pegar_chave
     # Nome: 'pegar_chave' (usado em {% url 'pegar_chave' pk=chave.pk %})
     path('chave/<int:pk>/', views.pegar_chave, name='pegar_chave'),
+
+path('login/', auth_views.LoginView.as_view(template_name='usuario/login.html'), name='login'),
+    
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
