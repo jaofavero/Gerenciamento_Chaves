@@ -35,4 +35,5 @@ document.addEventListener('DOMContentLoaded', function() {
             setInterval(atualizarListaEmprestimos, 60000);
         }
     }
+
 });

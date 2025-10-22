@@ -5,6 +5,29 @@
 
 {% block content %}
 
+    <div class="chave-action-container" style="max-width: 500px; margin: 20px auto; padding: 20px;">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data" action="{% url 'scan_page' %}" id="form-scan">
+            {% csrf_token %}
+            
+            <label for="qr_image_input" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; margin-bottom: 15px; text-decoration: none;">
+                Escanear QR Code
+            </label>
+            
+            <input type="file" name="qr_image" id="qr_image_input" accept="image/*" capture="environment" style="display: none;">
+
+            <p id="scan-loading-message" style="display: none; text-align: center; font-weight: bold; color: #555;">
+                Processando imagem...
+            </p>
+        </form>
+    </div>
 
     <h2>Situação Atual das Chaves</h2>
 
@@ -14,7 +37,7 @@
         <a href="{% url 'index' %}" class="btn-limpar">Limpar</a>
     </form>
 
-<table class="tabela-emprestimos">
+    <table class="tabela-emprestimos">
         <thead>
             <tr>
                 <th>Nome da Chave</th>
@@ -89,4 +112,24 @@
         
     <hr style="margin-bottom: 30px;">
     {% endif %}
+    <script>
+        // Pega os elementos que acabamos de adicionar
+        const scanForm = document.getElementById('form-scan');
+        const scanInput = document.getElementById('qr_image_input');
+        const scanLoadingMessage = document.getElementById('scan-loading-message');
+
+        // Adiciona o listener
+        if (scanForm && scanInput && scanLoadingMessage) {
+            scanInput.addEventListener('change', function() {
+                // Verifica se o usuário realmente selecionou um arquivo
+                if (scanInput.files.length > 0) {
+                    // Mostra a mensagem de "Processando..."
+                    scanLoadingMessage.style.display = 'block';
+                    
+                    // Envia o formulário automaticamente
+                    scanForm.submit();
+                }
+            });
+        }
+    </script>
 {% endblock %}

@@ -11,6 +11,8 @@ urlpatterns = [
 
     path('qr_code/', include('qr_code.urls', namespace='qr_code')),
 
+    path('scan/', views.scan_page, name='scan_page'),
+
     # URL: /historico/
     # View: views.historico_list
     # Nome: 'historico_list'

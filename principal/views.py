@@ -7,4 +7,4 @@ from principal.models import HistoricoEmprestimo, Chave, Usuario
 from .subviews.chaveViews import lista_chaves, pegar_chave, receber_chave, entregar_chave
 from .subviews.emprestimoViews import historico_list, api_ultimos_emprestimos
 from .subviews.indexViews import index
-from .subviews.qrcodeViews import gerar_qrcode_chave
+from .subviews.qrcodeViews import gerar_qrcode_chave, scan_page

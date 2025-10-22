@@ -160,6 +160,17 @@ def entregar_chave(request, pk):
                 Q(first_name__icontains=busca_termo) |
                 Q(last_name__icontains=busca_termo)
             ).filter(is_active=True) # Busca apenas usuários ativos
+            if usuarios_encontrados:
+                # Pega o grupo de permissão da chave (definido no admin)
+                grupo_requerido = chave.grupo_permissao
+                
+                for usuario in usuarios_encontrados:
+                    if grupo_requerido is None:
+                        # Se a chave não exige grupo, todos têm permissão
+                        usuario.tem_permissao = True 
+                    else:
+                        # Verifica se o usuário pertence ao grupo requerido
+                        usuario.tem_permissao = usuario.groups.filter(pk=grupo_requerido.pk).exists()
         
         contexto['usuarios_encontrados'] = usuarios_encontrados
         contexto['busca_termo'] = busca_termo
