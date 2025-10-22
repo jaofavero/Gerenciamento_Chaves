@@ -1,0 +1,45 @@
+# Arquivo .gitignore para o projeto Gerenciamento_Chaves
+
+# Byte-code Python compilado
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de Banco de Dados de Desenvolvimento
+db.sqlite3
+*.sqlite3
+
+# Ambiente Virtual Python
+# (O seu está em venv/ segundo notas.mkd)
+venv/
+env/
+ENV/
+*.env
+.env
+
+# Arquivos de IDE e Configuração Local
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de Log
+*.log
+logs/
+
+# Arquivos de Mídia (se você adicionar uploads de usuários)
+# media/
+
+# Arquivos Estáticos Coletados (se usar collectstatic em produção)
+# staticfiles/
+
+# Arquivos de Cobertura de Teste
+.coverage
+htmlcov/
+
+# Outros
+*.orig
