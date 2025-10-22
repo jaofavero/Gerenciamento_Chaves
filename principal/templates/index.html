@@ -5,15 +5,7 @@
 
 {% block content %}
 
-    {% if user.is_staff and ultimos_10_emprestimos %}
-        <h2>Últimas 10 Atualizações  </h2>
-        
-        <div id="lista-emprestimos-staff" style="margin-bottom: 30px;">
-            {% include 'historico/_lista_emprestimos.html' with emprestimos_list=ultimos_10_emprestimos %}
-        </div>
-        
-        <hr style="margin-bottom: 30px;">
-    {% endif %}
+
     <h2>Situação Atual das Chaves</h2>
 
     <form method="GET" action="{% url 'index' %}" class="form-filtro">
@@ -87,4 +79,14 @@
             {% endif %}
         </span>
     </div>
+
+    {% if user.is_staff and ultimos_10_emprestimos %}
+    <h2>Últimas 10 Atualizações  </h2>
+        
+    <div id="lista-emprestimos-staff" style="margin-bottom: 30px;">
+        {% include 'historico/_lista_emprestimos.html' with emprestimos_list=ultimos_10_emprestimos %}
+    </div>
+        
+    <hr style="margin-bottom: 30px;">
+    {% endif %}
 {% endblock %}

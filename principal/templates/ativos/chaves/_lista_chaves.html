@@ -59,6 +59,12 @@
                                 <button type="submit" class="btn-acao-receber">Receber</button>
                             </form>
                         {% endif %}
+                        <a href="{% url 'gerar_qrcode_chave' pk=chave.pk %}" 
+                           class="btn-acao-entregar" 
+                           style="background-color: #fc9300; margin-left: 5px;"
+                           target="_blank">
+                            Gerar QR Code
+                        </a>
                     </td>
                 </tr>
             {% empty %}

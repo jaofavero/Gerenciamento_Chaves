@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -8,7 +8,9 @@ urlpatterns = [
     # View: views.index
     # Nome: 'index' (usado em {% url 'index' %})
     path('', views.index, name='index'),
-    
+
+    path('qr_code/', include('qr_code.urls', namespace='qr_code')),
+
     # URL: /historico/
     # View: views.historico_list
     # Nome: 'historico_list'
@@ -34,6 +36,8 @@ urlpatterns = [
     
     # URL para a página de "Entregar" uma chave para um usuário
     path('chave/<int:pk>/entregar/', views.entregar_chave, name='entregar_chave'),
+
+    path('chave/<int:pk>/qrcode/', views.gerar_qrcode_chave, name='gerar_qrcode_chave'),
 
     # URL: /login/
     # View: auth_views.LoginView (com template 'usuario/login.html')
