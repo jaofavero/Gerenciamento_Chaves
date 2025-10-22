@@ -1,4 +1,55 @@
-/* Atualizado: static/css/style.css */
+.user-info {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fff;
+    font-size: 0.9rem;
+    
+    /* ADICIONADO/MODIFICADO */
+    display: flex; /* Alinha os itens horizontalmente */
+    align-items: center; /* Alinha verticalmente no centro */
+    gap: 5px; /* Adiciona um pequeno espaço entre os itens */
+}
+
+.user-info span { /* Estilo para o "Olá, ..." */
+    margin-right: 5px; /* Espaço antes da barra */
+}
+
+.user-info a { /* Estilo para o link Admin */
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none; /* Garante que não haja sublinhado por padrão */
+    margin: 0 5px; /* Espaço antes e depois da barra */
+}
+.user-info a:hover {
+    text-decoration: underline; /* Sublinhado no hover */
+}
+
+
+.form-logout {
+    display: inline; 
+    margin: 0;
+    padding: 0;
+    margin-left: 5px; /* Espaço depois da barra */
+}
+
+.btn-logout {
+    /* (estilos existentes para parecer link) */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    font-weight: bold;
+    font-family: inherit; 
+    font-size: inherit; 
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-logout:hover {
+    text-decoration: underline; 
+}
 
 body {
     /* Fonte padrão do exemplo aplicado ao corpo */

@@ -18,7 +18,7 @@
             {% if chave.status == 'disponivel' or chave.portador_atual != user %}
                 <form method="post" action="{% url 'pegar_chave' pk=chave.pk %}" style="margin-bottom: 15px;">
                     {% csrf_token %}
-                    <button type="submit" class="btn-pegar-chave">Estou com a posse da chave</button>
+                    <button type="submit" class="btn-pegar-chave">Estou responsavel pela chave</button>
                 </form>
                 <a href="{% url 'index' %}" class="btn-voltar-index">Não estou com a chave</a>
             {% elif chave.portador_atual == user %}

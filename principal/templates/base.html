@@ -24,6 +24,11 @@
         {% if user.is_authenticated %}
         <div class="user-info">
             <span>Olá, {{ user|default:"Usuário" }}</span> | 
+            
+            {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}">Admin</a> | 
+            {% endif %}
+            
             <form method="post" action="{% url 'logout' %}" class="form-logout">
                 {% csrf_token %}
                 <button type="submit" class="btn-logout">Sair</button>
