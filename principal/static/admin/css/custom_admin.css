@@ -126,13 +126,13 @@ html[data-theme="light"] .submit-row input.primary:hover {
      background: #008042;
 }
 
-/* Default (Secundários) */
+/* Default (Secundários) - [ALTERADO PARA VERDE] */
 html[data-theme="light"] .button,
 html[data-theme="light"] input[type=submit],
 html[data-theme="light"] input[type=button],
 html[data-theme="light"] .submit-row input.default,
 html[data-theme="light"] a.button {
-     background: #fc9300; /* Laranja */
+     background: #2f9e41; /* Verde Primário (Alterado de Laranja) */
      color: #fff;
      border-radius: 4px;
      border: none;
@@ -142,17 +142,21 @@ html[data-theme="light"] input[type=submit]:hover,
 html[data-theme="light"] input[type=button]:hover,
 html[data-theme="light"] .submit-row input.default:hover,
 html[data-theme="light"] a.button:hover {
-     background: #e28400; /* Laranja Escuro */
+     background: #008042; /* Verde Escuro (Alterado de Laranja Escuro) */
 }
 
 /* Warning (Apagar / Perigo) */
 html[data-theme="light"] .button.warning,
-html[data-theme="light"] .submit-row input.warning {
+html[data-theme="light"] .submit-row input.warning,
+html[data-theme="light"] a.deletelink {
      background: #d9534f; /* Vermelho */
+     color: #fff; /* ADICIONADO: Texto branco */
 }
 html[data-theme="light"] .button.warning:hover,
-html[data-theme="light"] .submit-row input.warning:hover {
+html[data-theme="light"] .submit-row input.warning:hover,
+html[data-theme="light"] a.deletelink:hover {
      background: #c9302c;
+     color: #fff; /* ADICIONADO: Texto branco no hover */
 }
 
 /* ===========================================================
@@ -195,3 +199,32 @@ html[data-theme="light"] .module caption a:hover {
      color: #f0f0f0; /* Um cinza bem claro no hover */
 }
 
+/* ===========================================================
+    9. Botões de Ferramentas (Object Tools - Ex: "Adicionar", "Histórico")
+    Alinha os links "Adicionar" (a.addlink) e "Histórico" (a.historylink)
+    com os botões de ação "Default" (agora verdes).
+    =========================================================== */
+html[data-theme="light"] ul.object-tools li a.addlink,
+html[data-theme="light"] ul.object-tools li a.historylink {
+     background: #2f9e41; /* Verde Primário */
+     color: #fff;
+     border: none;
+}
+html[data-theme="light"] ul.object-tools li a.addlink:hover,
+html[data-theme="light"] ul.object-tools li a.historylink:hover {
+     background: #008042; /* Verde Escuro */
+     color: #fff;
+}
+/* ===========================================================
+    10. Títulos do Seletor de Widgets (ex: Permissões)
+    Estiliza os cabeçalhos das caixas de seleção "disponíveis"
+    e "escolhidas" (como na página de Grupos) com o fundo
+    verde claro, consistente com os breadcrumbs.
+    =========================================================== */
+html[data-theme="light"] .selector-chosen-title {
+     background:  #008042; /* Verde bem claro (da paleta) */
+    
+     /* O admin usa !important na borda, então sobrepomos se necessário */
+     border-bottom: 1px solid #ddd !important;
+     padding: 10px;
+}
