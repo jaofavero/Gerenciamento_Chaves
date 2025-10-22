@@ -1,40 +1,46 @@
+/* style.css - Comentado: explicações breves sobre os blocos e propriedades */
+
+/* Menu de usuário no header: posicionamento e estilo geral */
 .user-info {
+    /* posiciona o bloco no canto superior direito do header */
     position: absolute;
     top: 10px;
     right: 20px;
     color: #fff;
     font-size: 0.9rem;
-    
-    /* ADICIONADO/MODIFICADO */
+
+    /* layout interno: alinhamento horizontal e espaçamento entre itens */
     display: flex; /* Alinha os itens horizontalmente */
     align-items: center; /* Alinha verticalmente no centro */
-    gap: 5px; /* Adiciona um pequeno espaço entre os itens */
+    gap: 5px; /* Espaço entre os itens */
 }
 
-.user-info span { /* Estilo para o "Olá, ..." */
-    margin-right: 5px; /* Espaço antes da barra */
+/* Texto "Olá, ..." -> pequeno espaçamento antes da barra/links */
+.user-info span {
+    margin-right: 5px;
 }
 
-.user-info a { /* Estilo para o link Admin */
+/* Estilo dos links dentro de .user-info (ex: "Admin") */
+.user-info a {
     color: #fff;
     font-weight: bold;
-    text-decoration: none; /* Garante que não haja sublinhado por padrão */
-    margin: 0 5px; /* Espaço antes e depois da barra */
+    text-decoration: none; /* remove sublinhado por padrão */
+    margin: 0 5px; /* espaço lateral entre itens */
 }
 .user-info a:hover {
-    text-decoration: underline; /* Sublinhado no hover */
+    text-decoration: underline; /* sublinha no hover para indicar interatividade */
 }
 
-
+/* Formulário de logout inline (usado para enviar POST) */
 .form-logout {
     display: inline; 
     margin: 0;
     padding: 0;
-    margin-left: 5px; /* Espaço depois da barra */
+    margin-left: 5px; /* espaço após a barra/último link */
 }
 
+/* Botão estilizado para parecer link (logout) */
 .btn-logout {
-    /* (estilos existentes para parecer link) */
     background: none;
     border: none;
     padding: 0;
@@ -46,107 +52,113 @@
     cursor: pointer;
     text-decoration: none;
 }
-
 .btn-logout:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
+/* Estilos globais do corpo da página */
 body {
-    /* Fonte padrão do exemplo aplicado ao corpo */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Mantendo um fundo claro para o corpo */
+    background-color: #f4f4f4; /* fundo claro */
     color: #333;
     line-height: 1.6;
-    overflow-y: scroll; /* Adicionado do exemplo */
+    overflow-y: scroll; /* mantém a barra de rolagem vertical sempre visível */
 }
 
+/* Header principal: cor, altura e centralização do conteúdo */
 header {
-    /* Cor de fundo do exemplo */
     background-color: #2f9e41; 
-    color: #fff; /* Cor do texto do exemplo */
+    color: #fff;
     padding: 1rem;
     text-align: center;
-    /* Ajustes para centralizar verticalmente e dar altura fixa (opcional) */
-    height: 80px; /* Altura do exemplo */
+    height: 80px; /* altura fixa para consistência */
     display: flex;
-    flex-direction: column; /* Empilha título e navegação */
+    flex-direction: column; /* empilha título e navegação */
     align-items: center;
     justify-content: center;
 }
 
+/* Ajuste do título no header */
 header h1 {
-    margin-bottom: 5px; /* Reduz espaço entre título e nav */
+    margin-bottom: 5px; /* reduz espaço entre título e nav */
 }
 
+/* Espaçamento da navegação no header */
 header nav {
     margin-top: 5px;
 }
 
+/* Links do header */
 header nav a {
-    color: #fff; /* Cor do link no header do exemplo */
+    color: #fff;
     text-decoration: none;
     margin: 0 10px;
-    font-weight: bold; /* Mantendo negrito para destaque */
+    font-weight: bold;
 }
-
 header nav a:hover {
     text-decoration: underline;
 }
 
+/* Conteúdo principal centralizado com limite de largura */
 main {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff; /* Fundo branco para área principal */
+    background: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    /* Adiciona espaço no topo para compensar header fixo (se fosse fixo) */
-    /* Se o header fosse 'position: fixed', precisaríamos de: margin-top: 100px; */
+    /* Se o header fosse fixo, aqui ajustaria margin-top para compensar */
 }
 
+/* Rodapé simples e centralizado */
 footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px;
-    color: #777; /* Mantendo cinza para o rodapé */
-     /* Fonte padrão do exemplo */
+    color: #777;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* Estilos da Tabela */
+/* ===== Estilos da tabela de empréstimos ===== */
+
+/* Tabela: largura total e colapso de bordas */
 .tabela-emprestimos {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
+/* Células: borda, preenchimento e alinhamento */
 .tabela-emprestimos th,
 .tabela-emprestimos td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
-    /* Fonte padrão do exemplo aplicada à tabela */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
 
+/* Cabeçalho da tabela com cor de fundo e texto branco */
 .tabela-emprestimos th {
-    /* Usando um verde um pouco mais escuro para o cabeçalho da tabela */
-    background-color: #008042; 
-    color: white; /* Texto branco como no header */
-    font-weight: bold; /* Adicionando negrito */
+    background-color: #008042;
+    color: white;
+    font-weight: bold;
 }
 
+/* Linhas pares com fundo alternado para melhor leitura */
 .tabela-emprestimos tr:nth-child(even) {
-    background-color: #f9f9f9; /* Mantendo destaque leve para linhas pares */
+    background-color: #f9f9f9;
 }
 
+/* Efeito hover nas linhas da tabela */
 .tabela-emprestimos tr:hover {
-    background-color: #e9f5e9; /* Verde bem claro no hover */
+    background-color: #e9f5e9;
 }
 
-/* Formulário de Filtro */
+/* ===== Formulário de filtro ===== */
+
+/* Container do formulário: layout flex, espaçamento e aparência */
 .form-filtro {
     margin-bottom: 20px;
     padding: 15px;
@@ -156,10 +168,10 @@ footer {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-     /* Fonte padrão do exemplo */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* Inputs, selects e botões dentro do filtro */
 .form-filtro input,
 .form-filtro select,
 .form-filtro button,
@@ -167,64 +179,65 @@ footer {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-     /* Fonte padrão do exemplo */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* Botão de busca com cor primária */
 .form-filtro button {
-    /* Cor primária do exemplo para o botão de pesquisa */
-    background-color: #2f9e41; 
+    background-color: #2f9e41;
     color: white;
     cursor: pointer;
-    border: none; /* Removendo borda padrão */
+    border: none;
 }
 .form-filtro button:hover {
-     /* Cor secundária do exemplo no hover */
     background-color: #008042;
 }
 
-
+/* Botão limpar com cor de alerta/aviso */
 .form-filtro .btn-limpar {
-    /* Cor de aviso do exemplo para o botão limpar */
-    background-color: #fc9300; 
+    background-color: #fc9300;
     color: white;
     cursor: pointer;
     text-decoration: none;
-    border: none; /* Removendo borda padrão */
+    border: none;
 }
 .form-filtro .btn-limpar:hover {
-     /* Cor secundária de aviso do exemplo no hover */
-    background-color: #e28400; 
+    background-color: #e28400;
 }
 
-/* Paginação */
+/* ===== Paginação ===== */
+
+/* Container de paginação */
 .pagination {
     margin-top: 20px;
-    /* Fonte padrão do exemplo */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* Links de paginação com aparência de botão */
 .pagination .step-links a {
     text-decoration: none;
     padding: 5px 10px;
     border: 1px solid #ddd;
     margin: 0 2px;
-    color: #2f9e41; /* Cor primária nos links */
+    color: #2f9e41;
     background-color: #fff;
     border-radius: 4px;
 }
 .pagination .step-links a:hover {
-    background-color: #e9f5e9; /* Fundo verde claro no hover */
+    background-color: #e9f5e9;
     border-color: #c8e6c9;
 }
 
-
+/* Página atual destacada (sem link) */
 .pagination .current {
     font-weight: bold;
     margin: 0 5px;
-    color: #333; /* Cor escura para página atual */
+    color: #333;
 }
 
+/* ===== Área de ação da chave ===== */
+
+/* Container central para ações relacionadas a uma chave */
 .chave-action-container {
     max-width: 600px;
     margin: 40px auto;
@@ -235,12 +248,14 @@ footer {
     background-color: #f9f9f9;
 }
 
+/* Título grande dentro do container */
 .chave-action-container h2 {
     margin-top: 0;
-    font-size: 2.2rem; /* Fonte maior para o nome da chave */
+    font-size: 2.2rem;
     color: #333;
 }
 
+/* Status de chave com padding e borda arredondada */
 .chave-status {
     font-size: 1.2rem;
     font-weight: bold;
@@ -249,16 +264,19 @@ footer {
     border-radius: 5px;
 }
 
+/* Estado disponível: texto verde com fundo claro */
 .status-disponivel {
-    color: #2f9e41; /* Verde do seu header */
+    color: #2f9e41;
     background-color: #e9f5e9;
 }
 
+/* Estado em uso: texto em tom de alerta com fundo claro */
 .status-em-uso {
-    color: #d9534f; /* Um tom de vermelho/laranja */
+    color: #d9534f;
     background-color: #fdf2f2;
 }
 
+/* Área de botões/ações empilhados verticalmente */
 .chave-actions {
     display: flex;
     flex-direction: column;
@@ -266,49 +284,49 @@ footer {
     gap: 15px;
 }
 
+/* Botão principal para pegar chave: grande e ocupa largura inteira do container */
 .btn-pegar-chave {
-    /* Botão principal, maior e central (pela largura) */
     padding: 18px 30px;
     font-size: 1.3rem;
     font-weight: bold;
-    background-color: #2f9e41; /* Cor primária */
+    background-color: #2f9e41;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.2s;
-    width: 100%; /* Ocupa a largura do container */
+    width: 100%;
 }
-
 .btn-pegar-chave:hover {
-    background-color: #008042; /* Cor secundária no hover */
+    background-color: #008042;
 }
 
+/* Link/botão menor para voltar ao índice */
 .btn-voltar-index {
-    /* Botão/link menor */
     font-size: 1rem;
     color: #555;
     text-decoration: none;
 }
-
 .btn-voltar-index:hover {
     text-decoration: underline;
 }
 
+/* Mensagem de informação genérica */
 .info-message {
     font-size: 1.1rem;
     color: #555;
     margin: 20px 0;
 }
 
-/* ... (todo o seu CSS existente) ... */
+/* --- Repetição / ajustes do header relacionados ao menu do usuário --- */
 
-/* --- Estilos do Header (Menu do Usuário) --- */
+/* Garante que o header seja o contexto para posicionar .user-info */
 header {
-    position: relative; /* Necessário para posicionar o user-info */
+    position: relative;
 }
 
+/* Reafirmação dos estilos de .user-info (pode ser redundante) */
 .user-info {
     position: absolute;
     top: 10px;
@@ -317,17 +335,20 @@ header {
     font-size: 0.9rem;
 }
 
+/* Links no user-info em negrito e brancos */
 .user-info a {
     color: #fff;
     font-weight: bold;
 }
 
-/* --- Estilos da Página de Login (login.html) --- */
+/* ===== Página de login ===== */
 
+/* Classe aplicada ao body apenas na página de login */
 body.login-page {
     background-color: #f4f4f4;
 }
 
+/* Container do formulário de login centralizado */
 .login-container {
     max-width: 400px;
     margin: 80px auto;
@@ -338,16 +359,19 @@ body.login-page {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* Título do formulário de login */
 .login-form h2 {
     text-align: center;
     color: #333;
     margin-top: 0;
 }
 
+/* Parágrafos do formulário com espaçamento inferior */
 .login-form p {
     margin-bottom: 15px;
 }
 
+/* Labels do formulário em bloco e negrito */
 .login-form label {
     display: block;
     margin-bottom: 5px;
@@ -355,19 +379,21 @@ body.login-page {
     color: #555;
 }
 
+/* Inputs de texto e senha com largura total e padding */
 .login-form input[type="text"],
 .login-form input[type="password"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não estoure a largura */
+    box-sizing: border-box; /* evita que padding aumente a largura total */
 }
 
+/* Botão de login com cor primária e texto em branco */
 .login-form button {
     width: 100%;
     padding: 12px;
-    background-color: #2f9e41; /* Cor primária do seu site */
+    background-color: #2f9e41;
     color: white;
     border: none;
     border-radius: 4px;
@@ -375,11 +401,11 @@ body.login-page {
     font-size: 1.1rem;
     font-weight: bold;
 }
-
 .login-form button:hover {
-    background-color: #008042; /* Cor secundária */
+    background-color: #008042;
 }
 
+/* Mensagem de erro de login com cor de alerta */
 .login-error {
     background-color: #fdd;
     border: 1px solid #d44;
