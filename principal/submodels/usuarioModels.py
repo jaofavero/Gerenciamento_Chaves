@@ -1,41 +1,37 @@
+# Author: João Victor Marques Favero
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group
 
 class Usuario(AbstractUser):
     """
-    Modelo de Usuário customizado que estende o User padrão do Django.
-    Isso nos permite adicionar campos específicos da instituição (como CPF e contato)
-    enquanto mantemos toda a integração com o sistema de autenticação e permissões.
+    Usuário customizado com CPF e contato; mantém autenticação/permissões do Django.
     """
-    # Campo para armazenar o CPF do usuário, deve ser único
+    # CPF único do servidor
     cpf = models.CharField('CPF', max_length=15, unique=True, help_text='CPF do servidor.')
-    
-    # Campo para armazenar o telefone de contato do usuário
+    # Telefone de contato
     contato = models.CharField('Contato', max_length=15, help_text='Telefone de contato do servidor.')
     
-    # Relacionamento many-to-many com grupos
-    # Sobrescrito para evitar conflitos com o modelo User padrão do Django
+    # Grupos (M2M) com nomes reversos personalizados para evitar conflito com User padrão
     groups = models.ManyToManyField(
         Group,
         verbose_name='grupos',
         blank=True,
         help_text='Os grupos a que este usuário pertence. Um usuário terá todas as permissões concedidas a cada um dos seus grupos.',
-        related_name="usuario_set",    # Nome personalizado para a relação reversa
-        related_query_name="usuario",  # Nome para consultas reversas
+        related_name="usuario_set",
+        related_query_name="usuario",
     )
 
-    # Relacionamento many-to-many com permissões
-    # Sobrescrito para evitar conflitos com o modelo User padrão do Django
+    # Permissões (M2M) com nomes reversos personalizados
     user_permissions = models.ManyToManyField(
         'auth.Permission',
         verbose_name='permissões do usuário',
         blank=True,
         help_text='Permissões específicas para este usuário.',
-        related_name="usuario_set",    # Nome personalizado para a relação reversa
-        related_query_name="usuario",  # Nome para consultas reversas
+        related_name="usuario_set",
+        related_query_name="usuario",
     )
 
-    # Método que retorna a representação em string do usuário
-    # Retorna o nome completo se existir, senão retorna o username
+    # Retorna nome completo; se ausente, retorna username
     def __str__(self):
         return self.get_full_name() or self.username

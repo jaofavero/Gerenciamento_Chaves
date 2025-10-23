@@ -1,43 +1,44 @@
-{% extends 'base.html' %}
-{% load static %}
+{# Autor: João Victor Marques Favero #}
+{% extends 'base.html' %} {# Estende o template base #}
+{% load static %} {# Carrega arquivos estáticos #}
 
-{% block title %}Histórico Completo - Gerenciamento de Chaves{% endblock %}
+{% block title %}Histórico Completo - Gerenciamento de Chaves{% endblock %} {# Define o título da página #}
 
 {% block content %}
-    <h2>Histórico Completo de Empréstimos</h2>
+    <h2>Histórico Completo de Empréstimos</h2> {# Título da seção #}
 
-    <form method="GET" action="{% url 'historico_list' %}" class="form-filtro">
-        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}">
-        <input type="text" name="usuario_nome" placeholder="Nome do Usuário" value="{{ request.GET.usuario_nome }}">
+    <form method="GET" action="{% url 'historico_list' %}" class="form-filtro"> {# Formulário de filtro #}
+        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}"> {# Campo para nome da chave #}
+        <input type="text" name="usuario_nome" placeholder="Nome do Usuário" value="{{ request.GET.usuario_nome }}"> {# Campo para nome do usuário #}
         
-        <select name="acao">
+        <select name="acao"> {# Seleção de ações #}
             <option value="">Qualquer Ação</option>
             <option value="adquirida" {% if request.GET.acao == 'adquirida' %}selected{% endif %}>Adquirida</option>
             <option value="devolucao" {% if request.GET.acao == 'devolucao' %}selected{% endif %}>Devolução</option>
             <option value="transferida" {% if request.GET.acao == 'transferida' %}selected{% endif %}>Transferida</option>
         </select>
         
-        <input type="date" name="data" value="{{ request.GET.data }}">
+        <input type="date" name="data" value="{{ request.GET.data }}"> {# Campo para data #}
         
-        <button type="submit">Pesquisar</button>
-        <a href="{% url 'historico_list' %}" class="btn-limpar">Limpar</a>
+        <button type="submit">Pesquisar</button> {# Botão para enviar o formulário #}
+        <a href="{% url 'historico_list' %}" class="btn-limpar">Limpar</a> {# Link para limpar filtros #}
     </form>
 
-    <div id="lista-emprestimos-container">
-        {% include 'historico/_lista_emprestimos.html' %}
+    <div id="lista-emprestimos-container"> {# Container para lista de empréstimos #}
+        {% include 'historico/_lista_emprestimos.html' %} {# Inclui a lista de empréstimos #}
     </div>
-    <div class="pagination">
+    <div class="pagination"> {# Contêiner de paginação #}
         <span class="step-links">
-            {% if page_obj.has_previous %}
+            {% if page_obj.has_previous %} {# Verifica se há página anterior #}
                 <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
                 <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
             {% endif %}
 
             <span class="current">
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}. {# Exibe a página atual e total #}
             </span>
 
-            {% if page_obj.has_next %}
+            {% if page_obj.has_next %} {# Verifica se há próxima página #}
                 <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
                 <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
             {% endif %}

@@ -1,3 +1,9 @@
+<!-- 
+    Autor: João Victor Marques Favero
+    Este código HTML gera uma tabela para exibir a lista de empréstimos.
+    A tabela contém colunas para Chave, Usuário, Data e Hora, e Ação.
+-->
+
 <table class="tabela-emprestimos">
     <thead>
         <tr>
@@ -10,19 +16,19 @@
     <tbody>
         {% for emprestimo in emprestimos_list %} 
             <tr>
-                <td>{{ emprestimo.chave.nome|default:"[Chave Excluída]" }}</td>
-                <td>{{ emprestimo.usuario|default:"[Usuário Excluído]" }}</td>
-                <td>{{ emprestimo.data_hora|date:"d/m/Y H:i" }}</td>
-                <td>{{ emprestimo.get_acao_display }}</td>
+                <td>{{ emprestimo.chave.nome|default:"[Chave Excluída]" }}</td> <!-- Nome da chave ou mensagem padrão -->
+                <td>{{ emprestimo.usuario|default:"[Usuário Excluído]" }}</td> <!-- Nome do usuário ou mensagem padrão -->
+                <td>{{ emprestimo.data_hora|date:"d/m/Y H:i" }}</td> <!-- Data e hora formatadas -->
+                <td>{{ emprestimo.get_acao_display }}</td> <!-- Ação do empréstimo -->
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">Nenhum registro encontrado.</td>
+                <td colspan="4">Nenhum registro encontrado.</td> <!-- Mensagem quando não há registros -->
             </tr>
         {% endfor %}
     </tbody>
 </table>
 
 {% if emprestimos_list.count > 0 %} 
-<p>Mostrando {{ emprestimos_list.count }} registro(s).</p>
+<p>Mostrando {{ emprestimos_list.count }} registro(s).</p> <!-- Exibe a contagem de registros -->
 {% endif %}

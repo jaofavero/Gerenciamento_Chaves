@@ -1,31 +1,6 @@
-/*
- custom_admin.css
- Caminho: /c:/Users/jvfav/OneDrive/Documentos/Faculdade/TCC/Gerenciamento_Chaves/principal/static/admin/css/custom_admin.css
+/* Author: João Victor Marques Favero */
 
- Finalidade:
-    Personalizações de aparência do Django Admin para o tema claro.
-    - Escopo aplicado apenas quando html[data-theme="light"] estiver presente.
-    - Mantém contraste acessível, cores da identidade e estilo consistente para botões, cabeçalhos e página de login.
-
- Notas de uso:
-    - Ajuste as cores abaixo na seção "PALETA" se precisar trocar identidade visual.
-    - Preferível manter !important apenas onde necessário (ex.: inputs do login).
-    - Comentários seguem o padrão de style.css: descrição geral da seção + comentários em linhas específicas.
-
- PALETA (valores usados)
-    -- primária:   #2f9e41 (verde claro)
-    -- secundária: #008042 (verde escuro)
-    -- acento:     #fc9300 (laranja)
-    -- alerta:     #d9534f (vermelho)
-    -- texto claro/backgroundes: #fff, #f4f4f4, #e9f5e9
-*/
-
-/* ===========================================================
-    1. Fonte Global
-    Aplica família tipográfica consistente para elementos principais
-    dentro do tema claro. Uso de !important para garantir override
-    sobre styles default do admin.
-    =========================================================== */
+/* Estilos para o tema claro */
 html[data-theme="light"] body,
 html[data-theme="light"] td,
 html[data-theme="light"] th,
@@ -33,198 +8,152 @@ html[data-theme="light"] caption,
 html[data-theme="light"] h1,
 html[data-theme="light"] h2,
 html[data-theme="light"] h3 {
-     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; /* Fonte padrão */
 }
 
-/* ===========================================================
-    2. Cabeçalho Principal (#header)
-    Personaliza fundo, cor e peso dos links no topo do admin.
-    Aplicado apenas quando não estiver na página de login.
-    =========================================================== */
+/* Estilo do cabeçalho */
 html[data-theme="light"] body:not(.login) #header {
      background-color: #2f9e41; /* Cor primária */
 }
 html[data-theme="light"] #header a:link,
 html[data-theme="light"] #header a:visited {
-     color: #fff;
-     font-weight: bold;
+     color: #fff; /* Cor dos links */
+     font-weight: bold; /* Negrito */
 }
 
-/* ===========================================================
-    3. Cabeçalhos dos Módulos (module, caption, inline-group)
-    Define fundo e cor do texto dos cabeçalhos das caixas de módulo.
-    Garante contraste para títulos e legendas do admin.
-    =========================================================== */
+/* Estilos para módulos */
 html[data-theme="light"] .module h2,
 html[data-theme="light"] .module caption,
 html[data-theme="light"] .inline-group h2 {
-     background: #008042; /* Cor secundária (verde escuro) */
+     background: #008042; /* Cor secundária */
 }
 html[data-theme="light"] .module section {
-     color: #ddd; /* Texto claro sobre fundo escuro do cabeçalho */
+     color: #ddd; /* Texto claro */
 }
 
-/* ===========================================================
-    4. Breadcrumbs
-    Estiliza a trilha de navegação (breadcrumbs) com fundo suave
-    e links na cor institucional para consistência visual.
-    =========================================================== */
+/* Estilos para breadcrumbs */
 html[data-theme="light"] .breadcrumbs {
-     background: #e9f5e9; /* Verde bem claro */
-     color: #008042;
+     background: #e9f5e9; /* Verde claro */
+     color: #008042; /* Cor do texto */
 }
 html[data-theme="light"] .breadcrumbs a {
-     color: #008042;
+     color: #008042; /* Cor dos links */
 }
 
-/* ===========================================================
-    5. Links Padrão
-    Define as cores padrão e hover para links em listas, filtros
-    e componentes de calendário/relógio do admin.
-    =========================================================== */
+/* Estilos gerais para links */
 html[data-theme="light"] a:link,
 html[data-theme="light"] a:visited {
-     color: #2f9e41;
+     color: #2f9e41; /* Cor padrão */
 }
 html[data-theme="light"] a:hover {
-     color: #008042;
+     color: #008042; /* Cor ao passar o mouse */
 }
 
-/* Links em componentes específicos (filtros/calendário/clock) */
+/* Links em componentes específicos */
 html[data-theme="light"] #changelist-filter a:link,
 html[data-theme="light"] #changelist-filter a:visited,
 html[data-theme="light"] .calendarbox a:link,
 html[data-theme="light"] .calendarbox a:visited,
 html[data-theme="light"] .clockbox a:link,
 html[data-theme="light"] .clockbox a:visited {
-      color: #2f9e41;
+      color: #2f9e41; /* Cor padrão */
 }
 html[data-theme="light"] #changelist-filter a:hover,
 html[data-theme="light"] .calendarbox a:hover,
 html[data-theme="light"] .clockbox a:hover {
-      color: #008042;
+      color: #008042; /* Cor ao passar o mouse */
 }
 
-/* ===========================================================
-    6. Botões de Ação
-    Classes principais: .primary (ação principal), .default / button
-    (ações secundárias) e .warning (perigos/exclusão). Bordas e
-    raios arredondados para aparência moderna.
-    =========================================================== */
-
-/* Primários */
+/* Estilos para botões primários */
 html[data-theme="light"] .button.primary,
 html[data-theme="light"] input[type=submit].primary,
 html[data-theme="light"] .submit-row input.primary {
-     background: #2f9e41;
-     border-radius: 4px;
-     border: none;
+     background: #2f9e41; /* Verde primário */
+     border-radius: 4px; /* Bordas arredondadas */
+     border: none; /* Sem borda */
 }
 html[data-theme="light"] .button.primary:hover,
 html[data-theme="light"] input[type=submit].primary:hover,
 html[data-theme="light"] .submit-row input.primary:hover {
-     background: #008042;
+     background: #008042; /* Verde escuro */
 }
 
-/* Default (Secundários) - [ALTERADO PARA VERDE] */
+/* Estilos para botões padrão (secundários) */
 html[data-theme="light"] .button,
 html[data-theme="light"] input[type=submit],
 html[data-theme="light"] input[type=button],
 html[data-theme="light"] .submit-row input.default,
 html[data-theme="light"] a.button {
-     background: #2f9e41; /* Verde Primário (Alterado de Laranja) */
-     color: #fff;
-     border-radius: 4px;
-     border: none;
+     background: #2f9e41; /* Verde primário */
+     color: #fff; /* Texto branco */
+     border-radius: 4px; /* Bordas arredondadas */
+     border: none; /* Sem borda */
 }
 html[data-theme="light"] .button:hover,
 html[data-theme="light"] input[type=submit]:hover,
 html[data-theme="light"] input[type=button]:hover,
 html[data-theme="light"] .submit-row input.default:hover,
 html[data-theme="light"] a.button:hover {
-     background: #008042; /* Verde Escuro (Alterado de Laranja Escuro) */
+     background: #008042; /* Verde escuro */
 }
 
-/* Warning (Apagar / Perigo) */
+/* Estilos para botões de aviso (perigo) */
 html[data-theme="light"] .button.warning,
 html[data-theme="light"] .submit-row input.warning,
 html[data-theme="light"] a.deletelink {
      background: #d9534f; /* Vermelho */
-     color: #fff; /* ADICIONADO: Texto branco */
+     color: #fff; /* Texto branco */
 }
 html[data-theme="light"] .button.warning:hover,
 html[data-theme="light"] .submit-row input.warning:hover,
 html[data-theme="light"] a.deletelink:hover {
-     background: #c9302c;
-     color: #fff; /* ADICIONADO: Texto branco no hover */
+     background: #c9302c; /* Vermelho escuro */
+     color: #fff; /* Texto branco no hover */
 }
 
-/* ===========================================================
-    7. Página de Login
-    Ajustes de background, container e botão do formulário de login.
-    Uso de !important no botão para garantir a cor sobre CSS padrão.
-    =========================================================== */
+/* Estilos para a página de login */
 html[data-theme="light"] body.login {
-      background: #f4f4f4;
+      background: #f4f4f4; /* Fundo da página de login */
 }
 html[data-theme="light"] .login #container {
-     border: 1px solid #ddd;
-     border-radius: 8px;
-     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+     border: 1px solid #ddd; /* Borda do container */
+     border-radius: 8px; /* Bordas arredondadas */
+     box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra */
 }
-/* Botão principal do formulário de login — ocupa 100% da largura */
+/* Botão do formulário de login */
 html[data-theme="light"] .login .form-row input[type="submit"] {
-     background: #2f9e41 !important;
-     width: 100%;
+     background: #2f9e41 !important; /* Cor do botão */
+     width: 100%; /* Largura total */
 }
 html[data-theme="light"] .login .form-row input[type="submit"]:hover {
-     background: #008042 !important;
+     background: #008042 !important; /* Cor ao passar o mouse */
 }
 
-/* ===========================================================
-    --- Correções de Contraste ---
-    Pequenos ajustes para garantir legibilidade em elementos com
-    fundos coloridos (ex.: captions e links dentro de módulos).
-    =========================================================== */
-
-/* 8. Links nos Cabeçalhos de Módulos (Captions)
-    Força cor branca para links dentro de captions com fundo escuro.
-    Mantém hover com um leve tom cinza-claro para acessibilidade.
-*/
+/* Estilos para links nos cabeçalhos de módulos */
 html[data-theme="light"] .module caption a:link,
 html[data-theme="light"] .module caption a:visited {
      color: #fff; /* Branco */
 }
 html[data-theme="light"] .module caption a:hover {
-     color: #f0f0f0; /* Um cinza bem claro no hover */
+     color: #f0f0f0; /* Cinza claro no hover */
 }
 
-/* ===========================================================
-    9. Botões de Ferramentas (Object Tools - Ex: "Adicionar", "Histórico")
-    Alinha os links "Adicionar" (a.addlink) e "Histórico" (a.historylink)
-    com os botões de ação "Default" (agora verdes).
-    =========================================================== */
+/* Estilos para links em ferramentas de objeto */
 html[data-theme="light"] ul.object-tools li a.addlink,
 html[data-theme="light"] ul.object-tools li a.historylink {
-     background: #2f9e41; /* Verde Primário */
-     color: #fff;
-     border: none;
+     background: #2f9e41; /* Verde primário */
+     color: #fff; /* Texto branco */
+     border: none; /* Sem borda */
 }
 html[data-theme="light"] ul.object-tools li a.addlink:hover,
 html[data-theme="light"] ul.object-tools li a.historylink:hover {
-     background: #008042; /* Verde Escuro */
-     color: #fff;
+     background: #008042; /* Verde escuro */
+     color: #fff; /* Texto branco */
 }
-/* ===========================================================
-    10. Títulos do Seletor de Widgets (ex: Permissões)
-    Estiliza os cabeçalhos das caixas de seleção "disponíveis"
-    e "escolhidas" (como na página de Grupos) com o fundo
-    verde claro, consistente com os breadcrumbs.
-    =========================================================== */
+
+/* Estilos para título de seleção */
 html[data-theme="light"] .selector-chosen-title {
-     background:  #008042; /* Verde bem claro (da paleta) */
-    
-     /* O admin usa !important na borda, então sobrepomos se necessário */
-     border-bottom: 1px solid #ddd !important;
-     padding: 10px;
+     background:  #008042; /* Verde claro */
+     border-bottom: 1px solid #ddd !important; /* Borda inferior */
+     padding: 10px; /* Espaçamento interno */
 }

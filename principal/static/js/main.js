@@ -1,39 +1,30 @@
-// Crie este arquivo em: static/js/main.js
+// Author: João Victor Marques Favero
+// Atualiza periodicamente a lista de empréstimos na home (a cada 60s) via fetch.
 
-document.addEventListener('DOMContentLoaded', function() {
-
-    // --- Lógica de Auto-Atualização da Tela Inicial ---
+document.addEventListener('DOMContentLoaded', function () {
+    // Container alvo no DOM
     const containerLista = document.getElementById('lista-emprestimos-container');
 
-    if (containerLista) {
-        
-        // Verifica se estamos na Tela Inicial (pela URL)
-        // Só queremos auto-atualização na Tela Inicial (URL '/')
-        const isPaginaInicial = window.location.pathname === '/';
+    // Prossegue apenas se o container existir e se for a página inicial
+    if (!containerLista || window.location.pathname !== '/') return;
 
-        if (isPaginaInicial) {
-            function atualizarListaEmprestimos() {
-                console.log("Buscando atualizações...");
-                
-                // Chama a URL da API definida em 'principal/urls.py'
-                fetch('/api/ultimos-emprestimos/', {
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    containerLista.innerHTML = html;
-                    console.log("Lista atualizada.");
-                })
-                .catch(error => {
-                    console.error('Erro ao atualizar a lista:', error);
-                });
-            }
-
-            // Atualiza a cada 60 segundos
-            setInterval(atualizarListaEmprestimos, 60000);
-        }
+    // Busca o HTML da lista e injeta no container
+    function atualizarListaEmprestimos() {
+        console.log('Atualizando lista...');
+        fetch('/api/ultimos-emprestimos/', {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+            .then((r) => r.text())
+            .then((html) => {
+                containerLista.innerHTML = html;
+                console.log('Lista atualizada.');
+            })
+            .catch((e) => console.error('Erro ao atualizar a lista:', e));
     }
 
+    // Atualização automática a cada 60s
+    setInterval(atualizarListaEmprestimos, 60000);
+
+    // Opcional: atualização imediata ao carregar
+    // atualizarListaEmprestimos();
 });

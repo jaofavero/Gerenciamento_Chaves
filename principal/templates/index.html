@@ -1,83 +1,84 @@
-{% extends 'base.html' %}
-{% load static %}
+{# Autor: João Victor Marques Favero #}
+{% extends 'base.html' %} {# Estende o template base #}
+{% load static %} {# Carrega arquivos estáticos #}
 
-{% block title %}Tela Inicial - Gerenciamento de Chaves{% endblock %}
+{% block title %}Tela Inicial - Gerenciamento de Chaves{% endblock %} {# Define o título da página #}
 
-{% block content %}
+{% block content %} {# Início do bloco de conteúdo #}
 
-    <div class="chave-action-container" style="max-width: 500px; margin: 20px auto; padding: 20px;">
-        {% if messages %}
-            {% for message in messages %}
-                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;">
-                    {{ message }}
+    <div class="chave-action-container" style="max-width: 500px; margin: 20px auto; padding: 20px;"> {# Container para ações de chave #}
+        {% if messages %} {# Verifica se há mensagens a serem exibidas #}
+            {% for message in messages %} {# Itera sobre as mensagens #}
+                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;"> {# Exibe mensagem de erro #}
+                    {{ message }} {# Mensagem #}
                 </p>
             {% endfor %}
         {% endif %}
 
-        <form method="POST" enctype="multipart/form-data" action="{% url 'scan_page' %}" id="form-scan">
-            {% csrf_token %}
+        <form method="POST" enctype="multipart/form-data" action="{% url 'scan_page' %}" id="form-scan"> {# Formulário para escanear QR Code #}
+            {% csrf_token %} {# Token de segurança #}
             
-            <label for="qr_image_input" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; margin-bottom: 15px; text-decoration: none;">
+            <label for="qr_image_input" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; margin-bottom: 15px; text-decoration: none;"> {# Botão para escanear #}
                 Escanear QR Code
             </label>
             
-            <input type="file" name="qr_image" id="qr_image_input" accept="image/*" capture="environment" style="display: none;">
+            <input type="file" name="qr_image" id="qr_image_input" accept="image/*" capture="environment" style="display: none;"> {# Input para arquivo de imagem #}
 
-            <p id="scan-loading-message" style="display: none; text-align: center; font-weight: bold; color: #555;">
+            <p id="scan-loading-message" style="display: none; text-align: center; font-weight: bold; color: #555;"> {# Mensagem de carregamento #}
                 Processando imagem...
             </p>
         </form>
     </div>
 
-    <h2>Situação Atual das Chaves</h2>
+    <h2>Situação Atual das Chaves</h2> {# Título para situação das chaves #}
 
-    <form method="GET" action="{% url 'index' %}" class="form-filtro">
-        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}">
-        <button type="submit">Pesquisar</button>
-        <a href="{% url 'index' %}" class="btn-limpar">Limpar</a>
+    <form method="GET" action="{% url 'index' %}" class="form-filtro"> {# Formulário de filtro #}
+        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}"> {# Campo de pesquisa #}
+        <button type="submit">Pesquisar</button> {# Botão de pesquisa #}
+        <a href="{% url 'index' %}" class="btn-limpar">Limpar</a> {# Link para limpar pesquisa #}
     </form>
 
-    <table class="tabela-emprestimos">
+    <table class="tabela-emprestimos"> {# Tabela para exibir chaves #}
         <thead>
             <tr>
                 <th>Nome da Chave</th>
                 <th>Status / Portador Atual</th>
                 
-                {% if user.is_staff %}
+                {% if user.is_staff %} {# Verifica se o usuário é staff #}
                     <th>Ações</th>
                 {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for chave in page_obj.object_list %} 
+            {% for chave in page_obj.object_list %} {# Itera sobre a lista de chaves #} 
                 <tr>
-                    <td>{{ chave.nome }}</td>
+                    <td>{{ chave.nome }}</td> {# Nome da chave #}
                     <td>
-                        {% if chave.status == 'disponivel' %}
+                        {% if chave.status == 'disponivel' %} {# Verifica status da chave #}
                             <span style="color: #2f9e41; font-weight: bold;">Disponível</span>
                         {% else %}
-                            {{ chave.portador_atual|default:"Em uso (Indefinido)" }}
+                            {{ chave.portador_atual|default:"Em uso (Indefinido)" }} {# Exibe portador atual #}
                         {% endif %}
                     </td>
 
-                    {% if user.is_staff %}
+                    {% if user.is_staff %} {# Ações disponíveis para staff #}
                         <td>
-                            {% if chave.status == 'disponivel' %}
-                                <a href="{% url 'entregar_chave' pk=chave.pk %}?next=index" class="btn-acao-entregar">
+                            {% if chave.status == 'disponivel' %} {# Se a chave está disponível #}
+                                <a href="{% url 'entregar_chave' pk=chave.pk %}?next=index" class="btn-acao-entregar"> {# Link para entregar chave #}
                                     Entregar
                                 </a>
-                            {% elif chave.status == 'em_uso' %}
-                                <form method="POST" action="{% url 'receber_chave' pk=chave.pk %}?next=index" style="display: inline;">
+                            {% elif chave.status == 'em_uso' %} {# Se a chave está em uso #}
+                                <form method="POST" action="{% url 'receber_chave' pk=chave.pk %}?next=index" style="display: inline;"> {# Formulário para receber chave #}
                                     {% csrf_token %}
-                                    <button type="submit" class="btn-acao-receber">Receber</button>
+                                    <button type="submit" class="btn-acao-receber">Receber</button> {# Botão para receber chave #}
                                 </form>
                             {% endif %}
                         </td>
                     {% endif %}
                 </tr>
-            {% empty %}
+            {% empty %} {# Se não houver chaves #}
                 <tr>
-                    <td colspan="{% if user.is_staff %}3{% else %}2{% endif %}">
+                    <td colspan="{% if user.is_staff %}3{% else %}2{% endif %}"> {# Colspan baseado em staff #}
                         Nenhuma chave encontrada com os critérios de pesquisa.
                     </td>
                 </tr>
@@ -85,49 +86,49 @@
         </tbody>
     </table>
 
-    <div class="pagination">
+    <div class="pagination"> {# Paginação #}
         <span class="step-links">
-            {% if page_obj.has_previous %}
+            {% if page_obj.has_previous %} {# Se houver página anterior #}
                 <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
                 <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
             {% endif %}
 
             <span class="current">
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}. {# Exibe número da página #}
             </span>
 
-            {% if page_obj.has_next %}
+            {% if page_obj.has_next %} {# Se houver próxima página #}
                 <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
                 <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
             {% endif %}
         </span>
     </div>
 
-    {% if user.is_staff and ultimos_10_emprestimos %}
+    {% if user.is_staff and ultimos_10_emprestimos %} {# Se o usuário é staff e há últimos empréstimos #}
     <h2>Últimas 10 Atualizações  </h2>
         
-    <div id="lista-emprestimos-staff" style="margin-bottom: 30px;">
-        {% include 'historico/_lista_emprestimos.html' with emprestimos_list=ultimos_10_emprestimos %}
+    <div id="lista-emprestimos-staff" style="margin-bottom: 30px;"> {# Lista de últimos empréstimos #}
+        {% include 'historico/_lista_emprestimos.html' with emprestimos_list=ultimos_10_emprestimos %} {# Inclui template de histórico #}
     </div>
         
-    <hr style="margin-bottom: 30px;">
+    <hr style="margin-bottom: 30px;"> {# Linha horizontal #}
     {% endif %}
     <script>
-        // Pega os elementos que acabamos de adicionar
-        const scanForm = document.getElementById('form-scan');
-        const scanInput = document.getElementById('qr_image_input');
-        const scanLoadingMessage = document.getElementById('scan-loading-message');
+        // Get the elements we just added
+        const scanForm = document.getElementById('form-scan'); // Get the scan form
+        const scanInput = document.getElementById('qr_image_input'); // Get the image input
+        const scanLoadingMessage = document.getElementById('scan-loading-message'); // Get the loading message
 
-        // Adiciona o listener
-        if (scanForm && scanInput && scanLoadingMessage) {
-            scanInput.addEventListener('change', function() {
-                // Verifica se o usuário realmente selecionou um arquivo
-                if (scanInput.files.length > 0) {
-                    // Mostra a mensagem de "Processando..."
-                    scanLoadingMessage.style.display = 'block';
+        // Add the listener
+        if (scanForm && scanInput && scanLoadingMessage) { // Check if the elements exist
+            scanInput.addEventListener('change', function() { // Add change event to the input
+                // Check if the user actually selected a file
+                if (scanInput.files.length > 0) { // If a file was selected
+                    // Show the "Processing..." message
+                    scanLoadingMessage.style.display = 'block'; // Display loading message
                     
-                    // Envia o formulário automaticamente
-                    scanForm.submit();
+                    // Automatically submit the form
+                    scanForm.submit(); // Submit the form
                 }
             });
         }

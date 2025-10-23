@@ -1,50 +1,51 @@
-{% load static %}
+{# Autor: João Victor Marques Favero #}
+{% load static %}  {# Carrega o sistema de arquivos estáticos do Django #}
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR">  {# Define o idioma da página como português do Brasil #}
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Gerenciamento de Chaves{% endblock %}</title>
+    <meta charset="utf-8">  {# Define a codificação de caracteres como UTF-8 #}
+    <meta name="viewport" content="width=device-width, initial-scale=1">  {# Configura a responsividade da página #}
+    <title>{% block title %}Gerenciamento de Chaves{% endblock %}</title>  {# Título da página, que pode ser sobrescrito #}
 
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">  {# Link para o arquivo CSS #}
 </head>
 <body>
     <header>
-        <h1>Gerenciamento de Chaves</h1>
+        <h1>Gerenciamento de Chaves</h1>  {# Título principal da página #}
         
         <nav>
-            <a href="{% url 'index' %}">Tela Inicial</a>
+            <a href="{% url 'index' %}">Tela Inicial</a>  {# Link para a tela inicial #}
             
-            {% if user.is_staff %}
-                | <a href="{% url 'lista_chaves' %}">Gerenciar Chaves</a>
-                | <a href="{% url 'historico_list' %}">Histórico Completo</a>
+            {% if user.is_staff %}  {# Verifica se o usuário é um membro da equipe #}
+                | <a href="{% url 'lista_chaves' %}">Gerenciar Chaves</a>  {# Link para gerenciar chaves #}
+                | <a href="{% url 'historico_list' %}">Histórico Completo</a>  {# Link para o histórico #}
             {% endif %}
         </nav>
         
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated %}  {# Verifica se o usuário está autenticado #}
         <div class="user-info">
-            <span>Olá, {{ user|default:"Usuário" }}</span> | 
+            <span>Olá, {{ user|default:"Usuário" }}</span> |  {# Exibe o nome do usuário ou "Usuário" #}
             
-            {% if user.is_staff %}
-                <a href="{% url 'admin:index' %}">Admin</a> | 
+            {% if user.is_staff %}  {# Verifica se o usuário é um membro da equipe #}
+                <a href="{% url 'admin:index' %}">Admin</a> |  {# Link para a área administrativa #}
             {% endif %}
             
-            <form method="post" action="{% url 'logout' %}" class="form-logout">
-                {% csrf_token %}
-                <button type="submit" class="btn-logout">Sair</button>
+            <form method="post" action="{% url 'logout' %}" class="form-logout">  {# Formulário de logout #}
+                {% csrf_token %}  {# Token de segurança para o formulário #}
+                <button type="submit" class="btn-logout">Sair</button>  {# Botão para sair #}
             </form>
         </div>
         {% endif %}
     </header>
     <main>
-        {% block content %}
+        {% block content %}  {# Bloco de conteúdo que pode ser sobrescrito #}
         {% endblock %}
     </main>
 
     <footer>
-        <p>© {% now "Y" %} — Sistema de Gerenciamento de Chaves</p>
+        <p>© João Victor Marques Favero {% now "Y" %} — Sistema de Gerenciamento de Chaves</p>  {# Rodapé com informações de copyright #}
     </footer>
 
-    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>  {# Link para o arquivo JavaScript #}
 </body>
 </html>

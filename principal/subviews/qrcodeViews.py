@@ -1,8 +1,10 @@
+# Author: João Victor Marques Favero
+
 # Imports para todas as funções neste arquivo
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from principal.models import Chave # Importa o modelo Chave
+from principal.models import Chave  # Importa o modelo Chave
 
 # Imports para a função de scan (upload)
 from django.contrib import messages
@@ -44,7 +46,7 @@ def scan_page(request):
         # 1. Verifica se um arquivo foi enviado
         if 'qr_image' not in request.FILES:
             messages.error(request, 'Nenhum arquivo enviado.')
-            return redirect('index') # <- ALTERADO DE 'scan_page' PARA 'index'
+            return redirect('index')  # Redireciona para a página inicial
 
         image_file = request.FILES['qr_image']
 
@@ -61,11 +63,11 @@ def scan_page(request):
                 return redirect(url)
             else:
                 messages.error(request, 'Nenhum QR Code encontrado na imagem. Tente novamente.')
-                return redirect('index') # <- ALTERADO DE 'scan_page' PARA 'index'
+                return redirect('index')  # Redireciona para a página inicial
                 
         except Exception as e:
             messages.error(request, f'Erro ao processar a imagem: {e}')
-            return redirect('index') # <- ALTERADO DE 'scan_page' PARA 'index'
+            return redirect('index')  # Redireciona para a página inicial
 
     else:
         # Método GET: Se o usuário for para /scan/ manualmente,

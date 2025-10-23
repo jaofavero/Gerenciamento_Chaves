@@ -1,19 +1,24 @@
-{% extends "admin/base.html" %}
-{% load static %} {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{# Autor: João Victor Marques Favero #}
+{% extends "admin/base.html" %} {# Estende o template base do admin #}
+{% load static %} {# Carrega o sistema de arquivos estáticos #} 
 
-{% block branding %}
+{% block title %} {# Bloco para definir o título da página #}
+    {% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }} 
+{% endblock %}
+
+{% block branding %} {# Bloco para a marcação do cabeçalho #}
 <div id="site-name">
-    <a href="{% url 'admin:index' %}">
+    <a href="{% url 'admin:index' %}"> {# Link para a página inicial do admin #}
         Sistema de Gerenciamento - Área Administrativa
     </a>
 </div>
-{% if user.is_anonymous %}
-  {% include "admin/color_theme_toggle.html" %}
+{% if user.is_anonymous %} {# Verifica se o usuário está anônimo #}
+  {% include "admin/color_theme_toggle.html" %} {# Inclui o seletor de tema #}
 {% endif %}
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}{% endblock %} {# Bloco para a navegação global #}
 
-{% block extrastyle %}
-    {{ block.super }} <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+{% block extrastyle %} {# Bloco para estilos adicionais #}
+    {{ block.super }} <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}"> {# Link para o CSS personalizado #}
 {% endblock %}

@@ -1,3 +1,4 @@
+/* Author: João Victor Marques Favero */
 /* Menu de usuário no header: posicionamento e estilo geral */
 .user-info {
     /* posiciona o bloco no canto superior direito do header */
@@ -411,31 +412,147 @@ body.login-page {
     color: #d44;
     padding: 10px;
     border-radius: 4px;
-    text-align: center;
+    text-align: center; /* Centraliza o texto dentro do formulário de erro */
 }
-
-/* ... (todo o seu CSS existente) ... */
 
 /* --- Estilos para Botões de Ação de Staff --- */
 .btn-acao-entregar,
 .btn-acao-receber {
-    display: inline-block;
-    padding: 6px 12px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    cursor: pointer;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: inline-block; /* Exibe os botões em linha */
+    padding: 6px 12px; /* Preenchimento interno dos botões */
+    font-size: 0.9rem; /* Tamanho da fonte dos botões */
+    font-weight: bold; /* Negrito para o texto dos botões */
+    color: #fff; /* Cor do texto dos botões */
+    border: none; /* Remove bordas padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove sublinhado */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Fonte dos botões */
 }
 
+/* Estilo específico para o botão de entregar e receber */
 .btn-acao-entregar,
 .btn-acao-receber {
-    background-color: #2f9e41; /* Cor primária */
+    background-color: #2f9e41; /* Cor primária dos botões */
 }
+
+/* Efeito hover para os botões de ação */
 .btn-acao-entregar:hover,
 .btn-acao-receber:hover {
-    background-color: #008042; /* Cor secundária (hover) */
+    background-color: #008042; /* Cor secundária ao passar o mouse */
+}
+
+/* --- Media Queries para Responsividade --- */
+@media (max-width: 768px) {
+    
+    /* --- Ajustes Gerais --- */
+    body {
+        line-height: 1.5; /* Melhora a legibilidade do texto */
+        -webkit-text-size-adjust: 100%; /* Previne zoom automático em fontes no iOS */
+    }
+
+    main {
+        margin: 10px; /* Reduz margens laterais do conteúdo principal */
+        padding: 10px; /* Reduz preenchimento interno do conteúdo principal */
+    }
+
+    /* --- Ajustes do Header (PROBLEMA PRINCIPAL) --- */
+    header {
+        height: auto; /* Altura automática para acomodar o conteúdo */
+        padding: 15px; /* Preenchimento do header */
+        flex-direction: column; /* Mantém a coluna para os itens do header */
+    }
+
+    header h1 {
+        font-size: 1.5rem; /* Reduz o tamanho do título principal */
+        margin-bottom: 10px; /* Espaço abaixo do título */
+    }
+
+    header nav {
+        margin-top: 0; /* Remove margem superior do nav */
+        margin-bottom: 10px; /* Adiciona margem inferior ao nav */
+    }
+    
+    header nav a {
+        margin: 0 5px; /* Reduz o espaçamento dos links de navegação */
+    }
+
+    /* --- Correção do .user-info --- */
+    .user-info {
+        position: static; /* Remove o posicionamento absoluto para responsividade */
+        display: flex; /* Exibe os itens em linha */
+        flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+        justify-content: center; /* Centraliza os itens quando quebram a linha */
+        gap: 5px; /* Espaço entre os itens */
+        margin-top: 10px; /* Adiciona espaço acima do user-info */
+        font-size: 0.85rem; /* Tamanho da fonte reduzido */
+    }
+
+    /* --- Ajustes de Formulários --- */
+    .form-filtro {
+        flex-direction: column; /* Empilha os campos do filtro verticalmente */
+        gap: 10px; /* Espaço entre os campos do filtro */
+    }
+
+    .form-filtro input,
+    .form-filtro select,
+    .form-filtro button,
+    .form-filtro .btn-limpar {
+        width: 100%; /* Ocupa 100% da largura disponível */
+        box-sizing: border-box; /* Garante que o padding não quebre o layout */
+    }
+
+    /* --- Ajustes de Tabelas --- */
+    /* Esta é a solução mais simples para tabelas: 
+      Elas se tornarão roláveis horizontalmente se não couberem na tela,
+      sem quebrar o layout da página inteira.
+    */
+    .tabela-emprestimos {
+        display: block; /* Exibe a tabela como um bloco */
+        width: 100%; /* Largura total da tabela */
+        overflow-x: auto; /* Permite rolar a tabela horizontalmente */
+        -webkit-overflow-scrolling: touch; /* Melhora a rolagem em dispositivos móveis */
+        white-space: nowrap; /* Impede que o conteúdo da tabela quebre linha */
+    }
+    
+    .tabela-emprestimos th,
+    .tabela-emprestimos td {
+        white-space: nowrap; /* Garante que o conteúdo da célula não quebre */
+        padding: 8px; /* Preenchimento das células */
+    }
+
+    /* --- Ajustes da Página de Login --- */
+    .login-container {
+        margin: 20px auto; /* Reduz a margem superior e centraliza */
+        padding: 20px; /* Preenchimento do container de login */
+        width: auto; /* Largura automática */
+        max-width: 90%; /* Usa 90% da largura da tela */
+    }
+    
+    /* --- Ajustes dos Contêineres de Ação --- */
+    .chave-action-container {
+         margin: 20px auto; /* Margem para centralizar o container */
+         padding: 20px; /* Preenchimento do container de ação */
+    }
+    
+    .chave-action-container h2 {
+        font-size: 1.8rem; /* Tamanho do título dentro do container de ação */
+    }
+    
+    .btn-pegar-chave {
+        font-size: 1.1rem; /* Tamanho da fonte do botão de pegar chave */
+        padding: 15px; /* Preenchimento do botão de pegar chave */
+    }
+
+    /* --- Paginação --- */
+    .pagination .step-links {
+        display: block; /* Exibe os links de paginação como bloco */
+        text-align: center; /* Centraliza os links de paginação */
+        font-size: 0.9rem; /* Tamanho da fonte dos links de paginação */
+    }
+    
+    .pagination .step-links a {
+        padding: 5px 8px; /* Preenchimento dos links de paginação */
+        margin: 0 1px; /* Margem entre os links de paginação */
+    }
 }

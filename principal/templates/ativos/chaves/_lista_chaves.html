@@ -1,61 +1,61 @@
-{% extends 'base.html' %}
-{% load static %}
+{# Autor: João Victor Marques Favero #}
+{% extends 'base.html' %} {# Estende o template base #}
+{% load static %} {# Carrega arquivos estáticos #}
 
-{% block title %}Gerenciamento de Chaves - Gerenciamento de Chaves{% endblock %}
+{% block title %}Gerenciamento de Chaves - Gerenciamento de Chaves{% endblock %} {# Define o título da página #}
 
 {% block content %}
-    <h2>Gerenciamento de Chaves</h2>
+    <h2>Gerenciamento de Chaves</h2> {# Título principal da seção #}
 
-    <form method="GET" action="{% url 'lista_chaves' %}" class="form-filtro">
-        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}">
+    <form method="GET" action="{% url 'lista_chaves' %}" class="form-filtro"> {# Formulário de filtro #}
+        <input type="text" name="chave_nome" placeholder="Nome da Chave" value="{{ request.GET.chave_nome }}"> {# Campo para nome da chave #}
         
-        <select name="status">
+        <select name="status"> {# Seleção de status #}
             <option value="">Qualquer Status</option>
             <option value="disponivel" {% if request.GET.status == 'disponivel' %}selected{% endif %}>Disponível</option>
             <option value="em_uso" {% if request.GET.status == 'em_uso' %}selected{% endif %}>Em Uso</option>
         </select>
         
-        <select name="excluido">
+        <select name="excluido"> {# Seleção de exclusão #}
             <option value="">Qualquer</option>
             <option value="nao" {% if request.GET.excluido == 'nao' %}selected{% endif %}>Não Excluídas</option>
             <option value="sim" {% if request.GET.excluido == 'sim' %}selected{% endif %}>Apenas Excluídas</option>
         </select>
         
-        <button type="submit">Pesquisar</button>
-        <a href="{% url 'lista_chaves' %}" class="btn-limpar">Limpar</a>
+        <button type="submit">Pesquisar</button> {# Botão para submeter o formulário #}
+        <a href="{% url 'lista_chaves' %}" class="btn-limpar">Limpar</a> {# Link para limpar filtros #}
     </form>
 
-<table class="tabela-emprestimos">
+<table class="tabela-emprestimos"> {# Tabela para exibir chaves #}
         <thead>
             <tr>
                 <th>Nome da Chave</th>
                 <th>Status / Portador Atual</th>
-                
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            {% for chave in page_obj.object_list %} 
-                <tr {% if chave.excluido %}style="opacity: 0.5; background-color: #f2f2f2;"{% endif %}>
+            {% for chave in page_obj.object_list %} {# Loop para cada chave na lista #} 
+                <tr {% if chave.excluido %}style="opacity: 0.5; background-color: #f2f2f2;"{% endif %}> {# Estilo para chaves excluídas #}
                     
-                    <td>{{ chave.nome }}</td>
+                    <td>{{ chave.nome }}</td> {# Nome da chave #}
                     
                     <td>
-                        {% if chave.status == 'disponivel' %}
+                        {% if chave.status == 'disponivel' %} {# Verifica se a chave está disponível #}
                             <span style="color: #2f9e41; font-weight: bold;">Disponível</span>
-                        {% else %}
+                        {% else %} {# Caso contrário, exibe o portador atual #}
                             {{ chave.portador_atual|default:"Em uso (Indefinido)" }}
                         {% endif %}
                     </td>
                     
                     <td>
-                        {% if chave.status == 'disponivel' %}
+                        {% if chave.status == 'disponivel' %} {# Ação para entregar chave disponível #}
                             <a href="{% url 'entregar_chave' pk=chave.pk %}?next=lista_chaves" class="btn-acao-entregar">
                                 Entregar
                             </a>
-                        {% elif chave.status == 'em_uso' %}
+                        {% elif chave.status == 'em_uso' %} {# Ação para receber chave em uso #}
                             <form method="POST" action="{% url 'receber_chave' pk=chave.pk %}?next=lista_chaves" style="display: inline;">
-                                {% csrf_token %}
+                                {% csrf_token %} {# Token de segurança #}
                                 <button type="submit" class="btn-acao-receber">Receber</button>
                             </form>
                         {% endif %}
@@ -64,28 +64,28 @@
                            style="background-color: #fc9300; margin-left: 5px;"
                            target="_blank">
                             Gerar QR Code
-                        </a>
+                        </a> {# Link para gerar QR Code da chave #}
                     </td>
                 </tr>
-            {% empty %}
+            {% empty %} {# Mensagem caso não haja chaves #}
                 <tr>
                     <td colspan="3">Nenhuma chave encontrada com os critérios de pesquisa.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div class="pagination">
+    <div class="pagination"> {# Navegação de páginas #}
         <span class="step-links">
-            {% if page_obj.has_previous %}
+            {% if page_obj.has_previous %} {# Verifica se há página anterior #}
                 <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
                 <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
             {% endif %}
 
             <span class="current">
-                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}. {# Exibe a página atual #}
             </span>
 
-            {% if page_obj.has_next %}
+            {% if page_obj.has_next %} {# Verifica se há próxima página #}
                 <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
                 <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
             {% endif %}

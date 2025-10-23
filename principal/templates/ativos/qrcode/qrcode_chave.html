@@ -1,29 +1,32 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load qr_code %} {% block title %}QR Code: {{ chave.nome }}{% endblock %}
+{# Autor: João Victor Marques Favero #}
+{% extends 'base.html' %} {# Estende o template base #}
+{% load static %} {# Carrega arquivos estáticos #}
+{% load qr_code %} {# Carrega o template tag para QR Code #} 
+
+{% block title %}QR Code: {{ chave.nome }}{% endblock %} {# Define o título da página com o nome da chave #}
 
 {% block content %}
     <div style="text-align: center; padding: 20px;">
-        <h2>QR Code para Chave: {{ chave.nome }}</h2>
+        <h2>QR Code para Chave: {{ chave.nome }}</h2> {# Título principal com o nome da chave #}
         
-        <p>Aponte a câmera do seu dispositivo para este código para acessar a página da chave.</p>
+        <p>Aponte a câmera do seu dispositivo para este código para acessar a página da chave.</p> {# Instrução para o usuário #}
         
-        {% qr_url_from_text url_para_qrcode size="M" border=4 error_correction="H" image_format="png" as qr_image_url %}
+        {% qr_url_from_text url_para_qrcode size="M" border=4 error_correction="H" image_format="png" as qr_image_url %} {# Gera a URL do QR Code a partir do texto #}
         
         <div style="margin: 30px 0;">
             <img src="{{ qr_image_url }}" 
                  alt="QR Code para {{ chave.nome }}" 
-                 style="border: 1px solid #ddd; padding: 10px; background: #fff; width: 250px; height: 250px;">
+                 style="border: 1px solid #ddd; padding: 10px; background: #fff; width: 250px; height: 250px;"> {# Exibe a imagem do QR Code #}
         </div>
         
         <a href="{{ qr_image_url }}" 
             class="btn-acao-entregar" 
             style="background-color: #008042;"
-            download="qrcode_chave_{{ chave.pk }}.png">
+            download="qrcode_chave_{{ chave.pk }}.png"> {# Link para download do QR Code em PNG #}
             Download (PNG)
         </a>
         
-        <a class="btn-voltar-index" href="{% url 'lista_chaves' %}" style="display: block; margin-top: 20px;">
+        <a class="btn-voltar-index" href="{% url 'lista_chaves' %}" style="display: block; margin-top: 20px;"> {# Link para voltar à lista de chaves #}
             Voltar para a Lista de Chaves
         </a>
     </div>

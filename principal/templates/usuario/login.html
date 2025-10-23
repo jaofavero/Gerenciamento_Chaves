@@ -1,37 +1,37 @@
-{% load static %}
+{% load static %}  <!-- Carrega o sistema de arquivos estáticos do Django -->
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR">  <!-- Define o idioma da página como português do Brasil -->
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Gerenciamento de Chaves</title>
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    <meta charset="utf-8">  <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Configura a responsividade da página -->
+    <title>Login - Gerenciamento de Chaves</title>  <!-- Título da página -->
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">  <!-- Link para o arquivo CSS -->
 </head>
 <body>
 
-    <div class="login-container">
+    <div class="login-container">  <!-- Contêiner para o formulário de login -->
         
-        <form method="post" class="login-form">
-            <h2>Login</h2>
+        <form method="post" class="login-form">  <!-- Formulário que envia dados via POST -->
+            <h2>Login</h2>  <!-- Título do formulário -->
             
-            {% csrf_token %}
+            {% csrf_token %}  <!-- Token de segurança contra CSRF -->
 
-            {% if form.errors %}
-                <p class="login-error">
+            {% if form.errors %}  <!-- Verifica se há erros no formulário -->
+                <p class="login-error">  <!-- Mensagem de erro -->
                     Seu nome de usuário e senha não correspondem. 
                     Por favor, tente novamente.
                 </p>
             {% endif %}
             
-            {{ form.as_p }}
+            {{ form.as_p }}  <!-- Renderiza o formulário como parágrafos -->
 
-            <button type="submit">Entrar</button>
+            <button type="submit">Entrar</button>  <!-- Botão para enviar o formulário -->
         </form>
 
     </div>
 
     <footer>
-        <p>© {% now "Y" %} — Sistema de Gerenciamento de Chaves</p>
+        <p>© {% now "Y" %} — Sistema de Gerenciamento de Chaves</p>  <!-- Rodapé com o ano atual -->
     </footer>
 
 </body>
