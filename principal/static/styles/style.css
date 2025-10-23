@@ -135,9 +135,10 @@ footer {
 .tabela-emprestimos td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
+    text-align: center;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; 
 }
+
 
 /* Cabeçalho da tabela com cor de fundo e texto branco */
 .tabela-emprestimos th {
