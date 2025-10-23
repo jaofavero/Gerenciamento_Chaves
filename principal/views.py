@@ -8,3 +8,4 @@ from .subviews.chaveViews import lista_chaves, pegar_chave, receber_chave, entre
 from .subviews.emprestimoViews import historico_list, api_ultimos_emprestimos
 from .subviews.indexViews import index
 from .subviews.qrcodeViews import gerar_qrcode_chave, scan_page
+from .subviews.errorViews import custom_page_not_found_view

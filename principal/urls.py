@@ -51,3 +51,5 @@ urlpatterns = [
     # Nome: 'logout' (usado em {% url 'logout' %})
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
+
+handler404 = 'principal.views.custom_page_not_found_view'
