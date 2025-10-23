@@ -26,7 +26,8 @@ class UsuarioAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ('contato', 'cpf')
 
 class ChaveAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'status', 'portador_atual', 'grupo_permissao', 'excluido')
+    list_display = ('nome', 'status', 'portador_atual', 'excluido')
+    filter_horizontal = ('grupos_permissao',)
 
 
 class HistoricoEmprestimoAdmin(admin.ModelAdmin):

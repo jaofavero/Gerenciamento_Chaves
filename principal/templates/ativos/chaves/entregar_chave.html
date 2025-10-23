@@ -15,46 +15,79 @@
     <form method="GET" action="" class="form-filtro">
         <input type="text" name="busca_usuario" placeholder="Nome ou Username" value="{{ busca_termo|default:'' }}">
         <button type="submit">Buscar</button>
+        <a href="{% url 'entregar_chave' pk=chave.pk %}" class="btn-limpar">Limpar</a>
     </form>
 
     {% if erro %}
         <p style="color: red; font-weight: bold;">{{ erro }}</p>
     {% endif %}
 
-    {% if usuarios_encontrados is not None %}
-        <hr>
-        <h3>2. Selecionar Usuário</h3>
-        
-        {% if usuarios_encontrados %}
-            <form method="POST" action="{% url 'entregar_chave' pk=chave.pk %}?next={{ request.GET.next|default:'lista_chaves' }}">
-                {% csrf_token %}
-                <table class="tabela-emprestimos">
-                    <thead>
-                        <tr>
-                            <th>Nome de Usuário</th>
-                            <th>Nome Completo</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for usuario in usuarios_encontrados %}
-                            <tr>
-                                <td>{{ usuario.username }}</td>
-                                <td>{{ usuario.get_full_name|default:"-" }}</td>
-                                <td>
-                                    <button type="submit" name="usuario_id" value="{{ usuario.pk }}" class="btn-acao-entregar">
-                                        Entregar para {{ usuario.username }}
-                                    </button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </form>
-        {% else %}
-            <p>Nenhum usuário encontrado com o termo "{{ busca_termo }}".</p>
-        {% endif %}
-    {% endif %}
+    <hr>
+    <h3>2. Selecionar Usuário</h3>
+    
+    <form method="POST" action="{% url 'entregar_chave' pk=chave.pk %}?next={{ request.GET.next|default:'lista_chaves' }}">
+        {% csrf_token %}
+        <table class="tabela-emprestimos">
+            <thead>
+                <tr>
+                    <th>Nome de Usuário</th>
+                    <th>Nome Completo</th>
+                    <th>Permissão</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in page_obj.object_list %}
+                    <tr>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.get_full_name|default:"-" }}</td>
+                        <td>
+                            {% if usuario.tem_permissao %}
+                                <span style="color: #2f9e41; font-weight: bold;">Sim</span>
+                            {% else %}
+                                <span style="color: #d9534f; font-weight: bold;" title="Grupos requeridos: {{ nomes_grupos_requeridos|default:'N/A' }}">
+                                    Não
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button type="submit" name="usuario_id" value="{{ usuario.pk }}" class="btn-acao-entregar">
+                                Entregar para {{ usuario.username }}
+                            </button>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            {% if busca_termo %}
+                                Nenhum usuário encontrado com o termo "{{ busca_termo }}".
+                            {% else %}
+                                Nenhum usuário cadastrado no sistema.
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 
     <a href="{% url request.GET.next|default:'lista_chaves' %}" style="display: block; margin-top: 20px;">Cancelar e Voltar</a>
 {% endblock %}

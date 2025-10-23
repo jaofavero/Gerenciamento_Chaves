@@ -37,9 +37,8 @@ class Chave(models.Model):
     )
     
     # Grupo de usuários que tem permissão para retirar a chave
-    grupo_permissao = models.ForeignKey(
+    grupos_permissao = models.ManyToManyField(
         Group,
-        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         verbose_name='Grupo com Permissão',

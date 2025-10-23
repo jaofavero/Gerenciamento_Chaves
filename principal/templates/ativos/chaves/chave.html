@@ -7,6 +7,14 @@
     <div class="chave-action-container">
         <h2>Chave: {{ chave.nome }}</h2>
 
+        {% if messages %}
+            {% for message in messages %}
+                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
         <p class="chave-status {% if chave.status == 'disponivel' %}status-disponivel{% else %}status-em-uso{% endif %}">
             Status Atual: {{ chave.get_status_display }}
             {% if chave.portador_atual %}
@@ -15,17 +23,19 @@
         </p>
 
         <div class="chave-actions">
+            
             {% if chave.status == 'disponivel' or chave.portador_atual != user %}
                 <form method="post" action="{% url 'pegar_chave' pk=chave.pk %}" style="margin-bottom: 15px;">
                     {% csrf_token %}
-                    <button type="submit" class="btn-pegar-chave">Estou responsavel pela chave</button>
+                    <button type="submit" class="btn-pegar-chave">Estou responsável pela chave</button>
                 </form>
-                <a href="{% url 'index' %}" class="btn-voltar-index">Não estou com a chave</a>
+                <a href="{% url 'index' %}" class="btn-voltar-index">Voltar</a>
+            
             {% elif chave.portador_atual == user %}
                  <p class="info-message">Você já está com esta chave.</p>
                  <a href="{% url 'index' %}" class="btn-voltar-index">Voltar a tela Inicial</a>
+             
              {% endif %}
-
         </div>
 
     </div>
