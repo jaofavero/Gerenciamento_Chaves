@@ -1,0 +1,122 @@
+# WebChaves: Sistema de Gerenciamento de Chaves
+
+**Autor:** João Victor Marques Favero
+
+Este projeto é um protótipo de TCC (Trabalho de Conclusão de Curso) para um sistema de gerenciamento de chaves físicas (como salas e laboratórios). O objetivo é automatizar e modernizar o controle de ativos físicos, substituindo o tradicional livro de registros em papel por uma plataforma web.
+
+O sistema permite o rastreamento em tempo real de quem está com qual chave, utilizando QR Codes para a transferência de posse e um painel administrativo para o controle centralizado.
+
+## Funcionalidades Principais
+
+- **Dashboard de Status**: Tela inicial que exibe o status atual de todas as chaves (Disponível / Em Uso) e o portador atual.
+- **Autenticação**: Sistema de login e logout para usuários.
+- **Níveis de Permissão**: Diferenciação entre usuários comuns e "Staff" (Portaria/Administração).
+- **Controle por QR Code**:
+    - Geração de QR Codes únicos para cada chave.
+    - Usuários autenticados podem "Pegar" uma chave escaneando seu QR Code (via upload de imagem).
+- **Painel de Staff (Gerenciamento)**:
+    - Visualização e gerenciamento de todas as chaves.
+    - Ações manuais para "Entregar" (atribuir) uma chave a um usuário específico.
+    - Ações manuais para "Receber" (devolver) uma chave de um usuário.
+    - Verificação de permissão de grupo ao entregar chaves restritas.
+- **Histórico Completo**: Um log detalhado registra todas as transações (aquisição, devolução, transferência).
+- **Modelo de Usuário Customizado**: O usuário padrão do Django foi estendido para incluir CPF e Contato.
+
+## Tecnologias e Requisitos
+
+- **Python 3.13**
+- **Django 5.5.7**
+- **Banco de Dados**: SQLite (padrão de desenvolvimento do Django)
+- **Bibliotecas Python**:
+    - `django-qr-code` (para geração dos QR Codes)
+    - `pyzbar` (para decodificação do QR Code no upload)
+    - `pillow` (para processamento de imagem)
+
+## Instalação e Configuração
+
+### 1. Requisitos
+
+Certifique-se de ter o Python 3.13 e o pip instalados.
+
+Crie um ambiente virtual (recomendado):
+
+```bash
+python -m venv venv
+```
+
+Ative o ambiente virtual:
+
+**Windows:**
+```bash
+.\venv\Scripts\activate
+```
+
+**Linux/macOS:**
+```bash
+source venv/bin/activate
+```
+
+Instale as dependências do projeto:
+
+```bash
+python -m pip install Django=="5.5.7"
+python -m pip install django-qr-code
+python -m pip install pyzbar
+python -m pip install pillow
+```
+
+### 2. Banco de Dados (Migration)
+
+Após clonar o projeto e instalar as dependências, aplique as migrações do banco de dados (isso criará o arquivo `db.sqlite3`):
+
+No terminal, navegue até o diretório raiz do projeto (onde está o `manage.py`).
+
+Execute `makemigrations` (para preparar novas alterações nos models, se houver):
+
+```bash
+python manage.py makemigrations
+```
+
+Execute `migrate` (para aplicar as alterações ao banco de dados):
+
+```bash
+python manage.py migrate
+```
+
+### 3. Criar um Superusuário (Admin)
+
+Para acessar o painel de Staff e a área de Admin (`/admin/`), você precisa criar um superusuário:
+
+```bash
+python manage.py createsuperuser
+```
+
+**Credenciais de Teste (Exemplo):**
+- Usuário: `IFTM`
+- Endereço de email: `iftm@iftm.edu.br`
+- Password: `EngComp`
+
+> **Atenção:** Estas credenciais são apenas para testes locais. Ao implantar o sistema em um ambiente público, utilize senhas fortes e mantenha as credenciais seguras.
+
+## Executando o Projeto Localmente
+
+Para testar o projeto, inicie o servidor de desenvolvimento do Django:
+
+```bash
+python manage.py runserver
+```
+
+Acesse o projeto no seu navegador, por padrão, em: http://localhost:8000/
+
+- Para acessar a tela de login, vá para http://localhost:8000/login/
+- Para acessar a área administrativa do Django, vá para http://localhost:8000/admin/
+
+Para desativar o ambiente virtual quando terminar:
+
+```bash
+deactivate
+```
+
+## Licença
+
+Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE.txt` para mais detalhes.
