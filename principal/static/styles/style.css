@@ -495,18 +495,20 @@ body.login-page {
     }
 
     .form-filtro input,
-    .form-filtro select,
+    .form-filtro select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .form-filtro button,
     .form-filtro .btn-limpar {
-        width: 100%; /* Ocupa 100% da largura disponível */
-        box-sizing: border-box; /* Garante que o padding não quebre o layout */
+        width: 100%;
+        box-sizing: border-box;
+        display: block; /* Faz o width funcionar e ocupa a linha inteira */
+        text-align: center; /* Centraliza o texto horizontalmente */
     }
 
     /* --- Ajustes de Tabelas --- */
-    /* Esta é a solução mais simples para tabelas: 
-      Elas se tornarão roláveis horizontalmente se não couberem na tela,
-      sem quebrar o layout da página inteira.
-    */
     .tabela-emprestimos {
         display: block; /* Exibe a tabela como um bloco */
         width: 100%; /* Largura total da tabela */
