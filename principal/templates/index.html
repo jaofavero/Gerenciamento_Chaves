@@ -7,27 +7,27 @@
 {% block content %} {# Início do bloco de conteúdo #}
 
     <div class="chave-action-container" style="max-width: 500px; margin: 20px auto; padding: 20px;"> {# Container para ações de chave #}
-        {% if messages %} {# Verifica se há mensagens a serem exibidas #}
-            {% for message in messages %} {# Itera sobre as mensagens #}
-                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;"> {# Exibe mensagem de erro #}
-                    {{ message }} {# Mensagem #}
+        {% if messages %} {# (O bloco de 'messages' permanece igual) #}
+            {% for message in messages %}
+                <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;">
+                    {{ message }}
                 </p>
             {% endfor %}
         {% endif %}
 
-        <form method="POST" enctype="multipart/form-data" action="{% url 'scan_page' %}" id="form-scan"> {# Formulário para escanear QR Code #}
-            {% csrf_token %} {# Token de segurança #}
-            
-            <label for="qr_image_input" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; margin-bottom: 15px; text-decoration: none;"> {# Botão para escanear #}
-                Escanear QR Code
-            </label>
-            
-            <input type="file" name="qr_image" id="qr_image_input" accept="image/*" capture="environment" style="display: none;"> {# Input para arquivo de imagem #}
+        <div id="scan-actions-container">
+            <button type="button" id="btn-iniciar-scan-video" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; margin-bottom: 15px; text-decoration: none;">
+                Escanear com Câmera
+            </button>
 
-            <p id="scan-loading-message" style="display: none; text-align: center; font-weight: bold; color: #555;"> {# Mensagem de carregamento #}
-                Processando imagem...
-            </p>
-        </form>
+            </div>
+
+        <div id="qr-reader-container" style="display: none; width: 100%; max-width: 450px; margin: 20px auto; text-align: center;">
+            <div id="qr-reader" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden;"></div>
+            <p id="qr-reader-status" style="color: #555; margin-top: 10px; font-weight: bold;">Iniciando câmera...</p>
+            <button type="button" id="btn-cancelar-scan" class="btn-voltar-index" style="margin-top: 15px; font-size: 1rem;">Cancelar</button>
+        </div>
+
     </div>
 
     <h2>Situação Atual das Chaves</h2> {# Título para situação das chaves #}
@@ -113,24 +113,6 @@
         
     <hr style="margin-bottom: 30px;"> {# Linha horizontal #}
     {% endif %}
-    <script>
-        // Get the elements we just added
-        const scanForm = document.getElementById('form-scan'); // Get the scan form
-        const scanInput = document.getElementById('qr_image_input'); // Get the image input
-        const scanLoadingMessage = document.getElementById('scan-loading-message'); // Get the loading message
 
-        // Add the listener
-        if (scanForm && scanInput && scanLoadingMessage) { // Check if the elements exist
-            scanInput.addEventListener('change', function() { // Add change event to the input
-                // Check if the user actually selected a file
-                if (scanInput.files.length > 0) { // If a file was selected
-                    // Show the "Processing..." message
-                    scanLoadingMessage.style.display = 'block'; // Display loading message
-                    
-                    // Automatically submit the form
-                    scanForm.submit(); // Submit the form
-                }
-            });
-        }
-    </script>
+    
 {% endblock %}

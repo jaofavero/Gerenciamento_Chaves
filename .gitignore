@@ -45,3 +45,5 @@ htmlcov/
 *.orig
 
 notas.mkd
+
+ngrok.exe

@@ -1,30 +1,134 @@
 // Author: João Victor Marques Favero
 // Atualiza periodicamente a lista de empréstimos na home (a cada 60s) via fetch.
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    // Container alvo no DOM
-    const containerLista = document.getElementById('lista-emprestimos-container');
+    
+    // --- Lógica 1: Atualização da lista de empréstimos (
+    const containerLista = document.getElementById('lista-emprestimos-staff');
 
     // Prossegue apenas se o container existir e se for a página inicial
-    if (!containerLista || window.location.pathname !== '/') return;
-
-    // Busca o HTML da lista e injeta no container
-    function atualizarListaEmprestimos() {
-        console.log('Atualizando lista...');
-        fetch('/api/ultimos-emprestimos/', {
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-            .then((r) => r.text())
-            .then((html) => {
-                containerLista.innerHTML = html;
-                console.log('Lista atualizada.');
+    if (containerLista && window.location.pathname === '/') {
+        
+        // Busca o HTML da lista e injeta no container
+        function atualizarListaEmprestimos() {
+            console.log('Atualizando lista...');
+            fetch('/api/ultimos-emprestimos/', {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
             })
-            .catch((e) => console.error('Erro ao atualizar a lista:', e));
+                .then((r) => r.text())
+                .then((html) => {
+                    containerLista.innerHTML = html;
+                    console.log('Lista atualizada.');
+                })
+                .catch((e) => console.error('Erro ao atualizar a lista:', e));
+        }
+
+        // Atualização automática a cada 60s
+        setInterval(atualizarListaEmprestimos, 60000);
+    }
+    
+    // --- Lógica 2: Script de Upload de Imagem (Movido da index.html) ---
+    const scanFormUpload = document.getElementById('form-scan-upload');
+    const scanInputUpload = document.getElementById('qr_image_input');
+    const scanLoadingMessage = document.getElementById('scan-loading-message');
+
+    if (scanFormUpload && scanInputUpload && scanLoadingMessage) {
+        scanInputUpload.addEventListener('change', function() {
+            if (scanInputUpload.files.length > 0) {
+                scanLoadingMessage.style.display = 'block';
+                scanFormUpload.submit();
+            }
+        });
     }
 
-    // Atualização automática a cada 60s
-    setInterval(atualizarListaEmprestimos, 60000);
+    // --- Lógica 3: Script de Scan por Vídeo  ---
+    const btnIniciarScan = document.getElementById('btn-iniciar-scan-video');
+    const btnCancelarScan = document.getElementById('btn-cancelar-scan');
+    const scannerContainer = document.getElementById('qr-reader-container');
+    const statusEl = document.getElementById('qr-reader-status');
+    const actionsContainer = document.getElementById('scan-actions-container');
 
-    // Opcional: atualização imediata ao carregar
-    // atualizarListaEmprestimos();
-});
+    // Só executa esta lógica se os elementos do scanner de vídeo existirem
+    if (btnIniciarScan && btnCancelarScan && scannerContainer && statusEl && actionsContainer) {
+        
+        let html5QrcodeScanner = null; // Guarda a instância do scanner
+        let redirectionDone = false;
+
+        // Função chamada no SUCESSO do scan de vídeo
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText && !redirectionDone) {
+                redirectionDone = true;
+                statusEl.innerHTML = `QR Code detectado! Redirecionando...`;
+                
+                if (html5QrcodeScanner) {
+                    html5QrcodeScanner.clear().catch(error => {
+                        console.error("Falha ao limpar o scanner.", error);
+                    });
+                }
+                // Redireciona para a URL lida!
+                window.location.href = decodedText;
+            }
+        }
+
+        // Função chamada na FALHA (frame não encontrado)
+        function onScanFailure(error) {
+            // Apenas "não encontrado", não é um erro real.
+        }
+
+        // --- Lógica dos Botões ---
+
+        // 1. Clicar em "Escanear com Câmera"
+        btnIniciarScan.addEventListener('click', function() {
+            // Esconde os botões de ação
+            actionsContainer.style.display = 'none';
+
+            // Mostra o container do scanner
+            scannerContainer.style.display = 'block';
+            statusEl.innerHTML = "Iniciando câmera...";
+            
+            // Configura e inicia o scanner
+            // (Html5QrcodeScanner e Html5QrcodeScanType vêm da biblioteca importada no index.html)
+            const scannerConfig = {
+                fps: 10,
+                qrbox: { width: 250, height: 250 },
+                rememberLastUsedCamera: true, // Lembra a câmera (traseira/frontal)
+                supportedScanTypes: [
+                    Html5QrcodeScanType.SCAN_TYPE_CAMERA
+                ],
+                camera: { facingMode: "environment" } // Pede a câmera traseira
+            };
+
+            if (!html5QrcodeScanner) {
+                html5QrcodeScanner = new Html5QrcodeScanner(
+                    "qr-reader",     // ID do Div
+                    scannerConfig,   // Configurações
+                    /* verbose= */ false
+                );
+            }
+            
+            redirectionDone = false; // Reseta o flag
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            statusEl.innerHTML = "Posicione o QR Code na área de leitura.";
+        });
+
+        // 2. Clicar em "Cancelar" (no scanner de vídeo)
+        btnCancelarScan.addEventListener('click', function() {
+            if (html5QrcodeScanner) {
+                // Para a câmera e limpa o scanner
+                html5QrcodeScanner.clear().catch(error => {
+                    console.error("Falha ao parar o scanner.", error);
+                });
+            }
+            
+            // Esconde o container do scanner
+            scannerContainer.style.display = 'none';
+            
+            // Mostra os botões de ação novamente
+            actionsContainer.style.display = 'block';
+        });
+
+    } // Fim do if (btnIniciarScan...)
+
+}); // Fim do DOMContentLoaded

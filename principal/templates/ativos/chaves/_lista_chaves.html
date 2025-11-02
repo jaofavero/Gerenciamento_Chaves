@@ -91,4 +91,27 @@
             {% endif %}
         </span>
     </div>
+
+    {% if messages %}
+        <div style="max-width: 800px; margin: 10px auto;">
+        {% for message in messages %}
+            <p class="login-error" style="background-color: #fdd; border: 1px solid #d44; color: #d44; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 15px;">
+                {{ message }}
+            </p>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="chave-action-container" style="max-width: 500px; margin: 20px auto; padding: 20px;">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'scan_page' %}" id="form-scan-upload">
+            {% csrf_token %}
+            <label for="qr_image_input" class="btn-pegar-chave" style="font-size: 1.1rem; width: 100%; box-sizing: border-box; display: block; padding: 15px; background-color: #555; text-decoration: none; cursor: pointer;">
+                Enviar Imagem do QR Code
+            </label>
+            <input type="file" name="qr_image" id="qr_image_input" accept="image/*" style="display: none;">
+            <p id="scan-loading-message" style="display: none; text-align: center; font-weight: bold; color: #555;">
+                Processando imagem...
+            </p>
+        </form>
+    </div>
 {% endblock %}
