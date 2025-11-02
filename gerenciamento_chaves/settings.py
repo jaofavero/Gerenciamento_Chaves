@@ -147,3 +147,8 @@ LOGOUT_REDIRECT_URL = 'login'
 #SESSION_COOKIE_SECURE = True
 #CSRF_COOKIE_SECURE = True
 #SECURE_SSL_REDIRECT = True
+
+#HSTS Settings - Após configurar HTTPS, descomente estas linhas para maior segurança
+#SECURE_HSTS_SECONDS = 31536000  # 1 ano
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
