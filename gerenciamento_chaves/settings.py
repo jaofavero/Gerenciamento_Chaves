@@ -21,7 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#go#9$8x2$5bi@2i$$4ue9(3p=bp#a7%c^&86vpo82*i5z&0r)'
+#Ao colocar em produção, gere uma nova chave secreta e salve em secreted_key.txt (manter este arquivo fora do controle de versão)
+#Gere uma secret_key nova com usando o comando: python manage.py shell
+SECRET_KEY = open(os.path.join(BASE_DIR, 'secreted_key.txt')).read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -140,3 +142,8 @@ LOGIN_REDIRECT_URL = 'index'
 
 # Para onde redirecionar após o LOGOUT
 LOGOUT_REDIRECT_URL = 'login'
+
+#Apos conseguir um certificado HTTPS válido, descomente a linha abaixo para forçar o uso de HTTPS
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#SECURE_SSL_REDIRECT = True
