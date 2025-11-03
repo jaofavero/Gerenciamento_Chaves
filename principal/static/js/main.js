@@ -2,11 +2,14 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     
-    // --- Lógica 1: Atualização da lista de empréstimos (Sem alterações) ---
+    // --- Lógica 1: Atualização da lista de empréstimos  ---
     const containerLista = document.getElementById('lista-emprestimos-staff');
+
+    // Prossegue apenas se o container existir e se for a página inicial
     if (containerLista && window.location.pathname === '/') {
+        
+        // Busca o HTML da lista e injeta no container
         function atualizarListaEmprestimos() {
-            // ... (código de atualização da lista) ...
             console.log('Atualizando lista...');
             fetch('/api/ultimos-emprestimos/', {
                 headers: { 'X-Requested-With': 'XMLHttpRequest' }
@@ -18,10 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch((e) => console.error('Erro ao atualizar a lista:', e));
         }
+
+        // Atualização automática a cada 60s
         setInterval(atualizarListaEmprestimos, 60000);
     }
     
-    // --- Lógica 2: Script de Upload de Imagem (Sem alterações) ---
+    // --- Lógica 2: Script de Upload de Imagem  ---
     const scanFormUpload = document.getElementById('form-scan-upload');
     const scanInputUpload = document.getElementById('qr_image_input');
     const scanLoadingMessage = document.getElementById('scan-loading-message');
@@ -35,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // --- Lógica 3: Script de Scan por Vídeo (Com MODIFICAÇÕES) ---
+    // --- Lógica 3: Script de Scan por Vídeo  ---
     const btnIniciarScan = document.getElementById('btn-iniciar-scan-video');
     const btnCancelarScan = document.getElementById('btn-cancelar-scan');
     const scannerContainer = document.getElementById('qr-reader-container');
@@ -47,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
         
         let html5QrcodeScanner = null; // Guarda a instância do scanner
         let redirectionDone = false;
-        let isScannerRunning = false; // Flag para evitar múltiplas chamadas
 
         // Função chamada no SUCESSO do scan de vídeo
         function onScanSuccess(decodedText, decodedResult) {
@@ -55,12 +59,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 redirectionDone = true;
                 statusEl.innerHTML = `QR Code detectado! Redirecionando...`;
                 
-                if (html5QrcodeScanner && isScannerRunning) {
+                if (html5QrcodeScanner) {
                     html5QrcodeScanner.clear().catch(error => {
                         console.error("Falha ao limpar o scanner.", error);
                     });
-                    isScannerRunning = false;
                 }
+                // Redireciona para a URL lida!
                 window.location.href = decodedText;
             }
         }
@@ -70,12 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
             // Apenas "não encontrado", não é um erro real.
         }
 
-        function iniciarScannerVideo() {
-            // Se o scanner já estiver rodando, não faz nada
-            if (isScannerRunning) {
-                return;
-            }
+        // --- Lógica dos Botões ---
 
+        // 1. Clicar em "Escanear com Câmera"
+        btnIniciarScan.addEventListener('click', function() {
             // Esconde os botões de ação
             actionsContainer.style.display = 'none';
 
@@ -84,10 +86,11 @@ document.addEventListener('DOMContentLoaded', function () {
             statusEl.innerHTML = "Iniciando câmera...";
             
             // Configura e inicia o scanner
+            // (Html5QrcodeScanner e Html5QrcodeScanType vêm da biblioteca importada no index.html)
             const scannerConfig = {
                 fps: 10,
                 qrbox: { width: 250, height: 250 },
-                rememberLastUsedCamera: true,
+                rememberLastUsedCamera: true, // Lembra a câmera (traseira/frontal)
                 supportedScanTypes: [
                     Html5QrcodeScanType.SCAN_TYPE_CAMERA
                 ],
@@ -104,48 +107,24 @@ document.addEventListener('DOMContentLoaded', function () {
             
             redirectionDone = false; // Reseta o flag
             html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-            isScannerRunning = true; // Marca que o scanner está ativo
             statusEl.innerHTML = "Posicione o QR Code na área de leitura.";
-        }
+        });
 
         // 2. Clicar em "Cancelar" (no scanner de vídeo)
         btnCancelarScan.addEventListener('click', function() {
-            if (html5QrcodeScanner && isScannerRunning) {
+            if (html5QrcodeScanner) {
+                // Para a câmera e limpa o scanner
                 html5QrcodeScanner.clear().catch(error => {
                     console.error("Falha ao parar o scanner.", error);
                 });
-                isScannerRunning = false;
             }
+            
+            // Esconde o container do scanner
             scannerContainer.style.display = 'none';
+            
+            // Mostra os botões de ação novamente
             actionsContainer.style.display = 'block';
         });
-        
-        btnIniciarScan.addEventListener('click', iniciarScannerVideo);
-
-        // Verifica se o navegador suporta a API de Permissões
-        if (navigator.permissions && navigator.permissions.query) {
-            navigator.permissions.query({ name: 'camera' })
-                .then(function(permissionStatus) {
-                    
-                    // Se a permissão JÁ FOI DADA anteriormente
-                    if (permissionStatus.state === 'granted') {
-                        // Inicia o scanner automaticamente
-                        iniciarScannerVideo();
-                    }
-                    // Se o estado for 'prompt' (precisa perguntar) ou 'denied' (negado),
-                    // não faz nada. O usuário terá que clicar no botão.
-                    
-                    // Lidar com permissão negada
-                    if (permissionStatus.state === 'denied') {
-                        statusEl.innerHTML = "Permissão da câmera negada. Habilite nas configurações.";
-                    }
-                })
-                .catch(function(error) {
-                    // Erro ao checar permissões (ex: API não suportada)
-                    // Não faz nada, apenas loga o aviso.
-                    console.warn("Não foi possível checar permissão da câmera:", error);
-                });
-        }
 
     } // Fim do if (btnIniciarScan...)
 
