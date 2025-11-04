@@ -32,7 +32,6 @@
         <table class="tabela-emprestimos">
             <thead>
                 <tr>
-                    <th>Nome de Usuário</th>
                     <th>Nome Completo</th>
                     <th>Permissão</th>
                     <th>Ação</th>
@@ -41,8 +40,7 @@
             <tbody>
                 {% for usuario in page_obj.object_list %}
                     <tr>
-                        <td>{{ usuario.username }}</td>
-                        <td>{{ usuario.get_full_name|default:"-" }}</td>
+                        <td>{{ usuario.get_full_name|default:usuario.username }}</td>
                         <td>
                             {% if usuario.tem_permissao %}
                                 <span style="color: #2f9e41; font-weight: bold;">Sim</span>
@@ -54,7 +52,7 @@
                         </td>
                         <td>
                             <button type="submit" name="usuario_id" value="{{ usuario.pk }}" class="btn-acao-entregar">
-                                Entregar para {{ usuario.username }}
+                                Entregar chave
                             </button>
                         </td>
                     </tr>
