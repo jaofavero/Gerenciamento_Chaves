@@ -39,9 +39,15 @@ def lista_chaves(request):
     pagina_num = request.GET.get('page')
     page_obj = paginador.get_page(pagina_num)
 
+    get_params = request.GET.copy()
+    if 'page' in get_params:
+        del get_params['page']
+    get_params_url = get_params.urlencode()
+
     contexto = {
         'page_obj': page_obj,
-        'chaves_list': page_obj.object_list
+        'chaves_list': page_obj.object_list,
+        'get_params_url': get_params_url
     }
     return render(request, 'ativos/chaves/_lista_chaves.html', contexto)
 
@@ -168,6 +174,11 @@ def entregar_chave(request, pk):
         paginador = Paginator(queryset, 20)
         pagina_num = request.GET.get('page')
         page_obj = paginador.get_page(pagina_num)
+
+        get_params = request.GET.copy()
+        if 'page' in get_params:
+            del get_params['page']
+        get_params_url = get_params.urlencode()
 
         # Grupos exigidos pela chave
         grupos_requeridos_ids = set(chave.grupos_permissao.values_list('pk', flat=True))

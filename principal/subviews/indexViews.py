@@ -22,6 +22,13 @@ def index(request):
     pagina_num = request.GET.get('page')  # Obtém o número da página da query string
     page_obj = paginador.get_page(pagina_num)  # Obtém o objeto da página atual
 
+    # Copia os parâmetros GET para não modificar o original
+    get_params = request.GET.copy()
+    if 'page' in get_params:
+        del get_params['page']  # Remove o parâmetro 'page' existente
+    
+    # URL de parâmetros filtrada (ex: "chave_nome=teste")
+    get_params_url = get_params.urlencode()
     # 2. Contexto inicial
     contexto = {
         'page_obj': page_obj,  # Adiciona o objeto da página ao contexto

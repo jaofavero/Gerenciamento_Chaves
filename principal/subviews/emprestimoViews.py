@@ -36,9 +36,15 @@ def historico_list(request):
     pagina_num = request.GET.get('page')  # Obtém o número da página atual
     page_obj = paginador.get_page(pagina_num)  # Obtém os objetos da página atual
 
+    get_params = request.GET.copy()
+    if 'page' in get_params:
+        del get_params['page']
+    get_params_url = get_params.urlencode()
+    
     contexto = {
         'page_obj': page_obj,  # Objeto da página atual
-        'emprestimos_list': page_obj.object_list  # Lista de empréstimos da página atual
+        'emprestimos_list': page_obj.object_list,  # Lista de empréstimos da página atual
+        'get_params_url': get_params_url
     }
     return render(request, 'historico/historico.html', contexto)  # Renderiza a template com o contexto
 

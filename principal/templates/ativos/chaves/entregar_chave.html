@@ -74,8 +74,8 @@
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1{{ request.GET.urlencode }}">&laquo; primeira</a>
-                <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode }}">anterior</a>
+                <a href="?page=1&{{ get_params_url }}">&laquo; primeira</a>
+                <a href="?page={{ page_obj.previous_page_number }}&{{ get_params_url }}">anterior</a>
             {% endif %}
 
             <span class="current">
@@ -83,8 +83,8 @@
             </span>
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode }}">próxima</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}{{ request.GET.urlencode }}">última &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}&{{ get_params_url }}">próxima</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&{{ get_params_url }}">última &raquo;</a>
             {% endif %}
         </span>
     </div>
